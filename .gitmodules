@@ -1,5 +1,5 @@
-[submodule "Development/KeePass2.0"]
-	path = Development/KeePass2.0
+[submodule "Development/KeePass2.x"]
+	path = Development/KeePass2.x
 	url = https://github.com/phi-el/KeePass2.x
 [submodule "Development/EncodingEx"]
 	path = Development/EncodingEx
@@ -16,8 +16,8 @@
 [submodule "Development/CefBrowser"]
 	path = Development/CefBrowser
 	url = https://github.com/phi-el/CefBrowser
-[submodule "Development/rpc-communication-net-2"]
-	path = Development/rpc-communication-net-2
+[submodule "Development/rpc-communication-net2"]
+	path = Development/rpc-communication-net2
 	url = https://github.com/phi-el/rpc-communication-net2
 [submodule "Development/IoHelper"]
 	path = Development/IoHelper
