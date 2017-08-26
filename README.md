@@ -7,6 +7,8 @@ A plugin for KeePass v2 to change supported password entries automatically
 Select branch master, go to Build/KeePass-Password-Changer and download the latest zip version of the plugin. The current version and the sha512 hash value of the zip file can be located in the README.md.   
 Unzip the content of the zip folder into the KeePass v2 Directory. It's recommended to have another Directory with the KeePass executable for the plugin, because the plugin contains too many files at the moment and deleting the plugin will be horrible afterwards ;)
 
+**Important:** Let CefBrowser communicate through your firewall BEFORE you start a browser action. The best solution therefor is to execute it after you extracted the plugin. If the **DuckDuckgo.com** site shows up, you are ready to go :)
+
 
 # Rebuild it on your own :)
 
@@ -41,7 +43,6 @@ xcopy "$(ProjectDir)..\..\CefBrowser\CefBrowser\bin\x86\Release" "$(TargetDir)" 
 and the post-build actions look like this:
 ```
 REM echo V | xcopy "$(TargetDir)." "$(ProjectPath)\..\..\..\KeePass2.x\Build\KeePass\Debug\." /Y /E
-echo V | xcopy "$(TargetDir)." "$(ProjectPath)\..\..\..\..\Build\KeePass-Password-Changer\." /Y /E
 ```
 When this does not work try:
 You have to remove the KeePass reference in the project **KeePass Password Changer** and add the KeePass executable from the Director **\Build\KeePass-2.36**, Then right click on **KeePass Password Changer** and click on **rebuild new**
