@@ -16,6 +16,18 @@ git checkout 'PasswordManagementLibrary'
 Recover the NUGET Packets:
  - **RPC-Communicaton**: Open Development\rpc-communication-net-2\rpc-communication-net2.sln
  - **CefBrowser**: Open Development\CefBrowser\CefBrowser.sln
+ - **KeePass Password Changer**: Open Development\KeePassPasswordChanger\KeePass Password Changer.sln
 In this order, these projects should immediately build
 
-Open Development\KeePassPasswordChanger\KeePass Password Changer.sln
+
+### Build
+Select branch **master**, the project should immediately build(after you have recovered the NUGET packets).
+
+When this does not work try:
+You have to remove the KeePass reference in the project **KeePass Password Changer** and add the KeePass executable from the Director **\Build\KeePass-2.36**, Then right click on **KeePass Password Changer** and click on **rebuild new**
+
+### Develop
+Select branch **dev**, the project should immediately build(after you have recovered the NUGET packets).
+
+When this does not work try:
+You have to remove the KeePass reference in the project **KeePass Password Changer** and add the KeePass executable from the Director **\Development\KeePass2.x\Build\KeePass\Debug**, Then right click on **KeePass Password Changer** and click on **rebuild new**
