@@ -12,3 +12,10 @@ Run following commands(keePass2 will fail, its ok)
 git submodule foreach --recursive git checkout master  
 git checkout 'PasswordManagementLibrary'
 ```
+## HowTo Dev/Build
+Recover the NUGET Packets:
+ - **RPC-Communicaton**: Open Development\rpc-communication-net-2\rpc-communication-net2.sln
+ - **CefBrowser**: Open Development\CefBrowser\CefBrowser.sln
+In this order, these projects should immediately build
+
+Open Development\KeePassPasswordChanger\KeePass Password Changer.sln
