@@ -1,0 +1,24 @@
+[submodule "Development/KeePass2.0"]
+	path = Development/KeePass2.0
+	url = https://github.com/phi-el/KeePass2.x
+[submodule "Development/EncodingEx"]
+	path = Development/EncodingEx
+	url = https://github.com/phi-el/EncodingEx
+[submodule "Development/HashingEx"]
+	path = Development/HashingEx
+	url = https://github.com/phi-el/HashingEx
+[submodule "Development/Serialization"]
+	path = Development/Serialization
+	url = https://github.com/phi-el/SerializationDotNet2
+[submodule "Development/ExceptionHandling"]
+	path = Development/ExceptionHandling
+	url = https://github.com/phi-el/ExceptionHandling
+[submodule "Development/CefBrowser"]
+	path = Development/CefBrowser
+	url = https://github.com/phi-el/CefBrowser
+[submodule "Development/rpc-communication-net-2"]
+	path = Development/rpc-communication-net-2
+	url = https://github.com/phi-el/rpc-communication-net2
+[submodule "Development/IoHelper"]
+	path = Development/IoHelper
+	url = https://github.com/phi-el/IoHelper
