@@ -33,7 +33,8 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(SwitchUserInputEnabling))]
     [XmlInclude(typeof(SwitchWindowVisibility))]
     [XmlInclude(typeof(PasswordCreationPolicy))]
-
+    [XmlInclude(typeof(BrowserAction))]
+    [XmlInclude(typeof(BrowserCommand))]
     public class TemplateElement : ICloneable, IInstanciateInputParameters
     {
         //Always Run CheckRequiredParameters after adding elements to this list!
@@ -157,11 +158,37 @@ namespace KeePassPasswordChanger.Templates
         {
             Type type = BrowserActionOrCommand.GetType();
             string browserOrActionCommand =
-                SerializationDotNet2.Xml.Serializer.SerializeObjectToString(BrowserActionOrCommand,type
-                    );
-            BrowserActionOrCommand =
-                SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(browserOrActionCommand, type);
-            return (TemplateElement) this.MemberwiseClone();
+                SerializationDotNet2.Xml.Serializer.SerializeObjectToString(BrowserActionOrCommand,type);
+            string appendedTemplate = "";
+            if (AppendedTemplateElement != null)
+                appendedTemplate = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(AppendedTemplateElement, AppendedTemplateElement.GetType());
+            string conditions = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(SuccessConditions, SuccessConditions.GetType());
+            string conditionBasedTemplateElements = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(ConditionBasedAppendedTemplateElements, ConditionBasedAppendedTemplateElements.GetType());
+            //return (TemplateElement) this.MemberwiseClone();
+            TemplateElement newTemplateElement = (TemplateElement) this.MemberwiseClone();
+
+            newTemplateElement.BrowserActionOrCommand = SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(browserOrActionCommand, type);
+
+            if (appendedTemplate != "") 
+                newTemplateElement.AppendedTemplateElement = (TemplateElement) SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(appendedTemplate, AppendedTemplateElement.GetType());
+            newTemplateElement.SuccessConditions = (List<Condition>) SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(conditions, SuccessConditions.GetType());
+            newTemplateElement.ConditionBasedAppendedTemplateElements = (List<KeyValuePairEx<List<Condition>, TemplateElement>>) SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(conditionBasedTemplateElements, ConditionBasedAppendedTemplateElements.GetType());
+
+            //run for every templateelment in there:
+            if (newTemplateElement.AppendedTemplateElement != null)
+                newTemplateElement.AppendedTemplateElement = (TemplateElement) newTemplateElement.AppendedTemplateElement.Clone();
+
+             List<KeyValuePairEx<List<Condition>, TemplateElement>> newConditionBasedAppendedTemplateElements = new List<KeyValuePairEx<List<Condition>, TemplateElement>>();
+            foreach (var conditionsToTemplateElement in newTemplateElement.ConditionBasedAppendedTemplateElements)
+            {
+                KeyValuePairEx < List<Condition>, TemplateElement > newKeyValuePairEx = new KeyValuePairEx<List<Condition>, TemplateElement>(conditionsToTemplateElement.Key, conditionsToTemplateElement.Value);
+                if (newKeyValuePairEx.Value != null)
+                    newKeyValuePairEx.Value = (TemplateElement) conditionsToTemplateElement.Value.Clone();
+                newConditionBasedAppendedTemplateElements.Add(newKeyValuePairEx);
+            }
+            newTemplateElement.ConditionBasedAppendedTemplateElements = newConditionBasedAppendedTemplateElements;
+
+            return newTemplateElement;
         }
 
         public  void ReadAvailableInputParameters()

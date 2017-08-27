@@ -230,6 +230,7 @@
             this.listBoxTemplatesCompleted.ScrollAlwaysVisible = true;
             this.listBoxTemplatesCompleted.Size = new System.Drawing.Size(344, 251);
             this.listBoxTemplatesCompleted.TabIndex = 3;
+            this.listBoxTemplatesCompleted.SelectedIndexChanged += new System.EventHandler(this.listBoxTemplatesCompleted_SelectedIndexChanged);
             // 
             // groupBox1
             // 
