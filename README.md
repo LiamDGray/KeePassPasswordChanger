@@ -12,6 +12,9 @@ Unzip the content of the zip folder into the KeePass v2 Directory. It's recommen
 
 # Rebuild it on your own :)
 
+## Known problems (Besides the requirements below)
+ - When building the KeePassPasswordChanger solution, a CSC Error 'Metadata file .dll could not be found' occurs. Most of the time it is the 'CSharpTest.Net.RpcLibrary.dll'. This can happen is you restart your computer. Remove the 'CSharpTest.Net.RpcLibrary.dll'(or the missing DLL) from the Extension project(like RPC-Communication) and re-add it again, this should solve the problem and you should be able to rebuild the project, regardless if the branch is 'DEV' or 'MASTER'. 
+
 ## Branches
  - Master: When using master branch, you get the plugin which can be used with KeePass v2
  - Dev: When using this, you get the plugin which can be used for development
