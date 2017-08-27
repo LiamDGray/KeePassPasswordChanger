@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using CefBrowserControl;
 using KeePassLib;
 using KeePassLib.Security;
+using KeePassPasswordChanger.Resources;
 using KeePassPasswordChanger.Templates;
 using Timer = System.Timers.Timer;
 
@@ -564,6 +565,21 @@ namespace KeePassPasswordChanger
             AddSelected();
         }
 
+        private string GenerateFullDebugOutput(Template template)
+        {
+            string output = "";
+
+            foreach (var identifierToOutputObject in template.AvailableResources)
+            {
+                if (identifierToOutputObject.Value is Text)
+                {
+                    output += identifierToOutputObject.Key + ": " + ((Text) identifierToOutputObject.Value).Value.ReadString() + "\r\n";
+                }
+            }
+
+            return output;
+        }
+
         private void listBoxFailedTemplates_SelectedIndexChanged(object sender, EventArgs e)
         {
             while (true)
@@ -581,7 +597,7 @@ namespace KeePassPasswordChanger
                                 if (listBoxFailedTemplates.Items[i].ToString() ==
                                     GenerateFailureEntryLine(UtidTotemplate.Value))
                                 {
-                                    Clipboard.SetText(GenerateFailureEntryLine(UtidTotemplate.Value));
+                                    Clipboard.SetText(GenerateFailureEntryLine(UtidTotemplate.Value) + "\r\n\r\n" + GenerateFullDebugOutput(UtidTotemplate.Value) + "\r\n");
                                     break;
                                 }
                                 count++;
@@ -622,6 +638,45 @@ namespace KeePassPasswordChanger
                                 if (currentEntry == checkingEntry)
                                 {
                                     Clipboard.SetText(GenerateActiveEntryLine(UtidTotemplate.Value));
+                                    break;
+                                }
+                                count++;
+                            }
+                        }
+                    }
+                    break;
+                }
+                catch (ApplicationException ex)
+                {
+                    ExceptionHandling.Handling.GetException("ReaderWriterLock", ex);
+                }
+                finally
+                {
+                    if (TemplateManagement.LockTemplates.IsWriterLockHeld)
+                        TemplateManagement.LockTemplates.ReleaseWriterLock();
+                }
+                Thread.Sleep(100);
+            }
+        }
+
+        private void listBoxTemplatesCompleted_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            while (true)
+            {
+                try
+                {
+                    TemplateManagement.LockTemplates.AcquireWriterLock(Options.LockTimeOut);
+                    for (int i = 0; i < listBoxTemplatesCompleted.Items.Count; i++)
+                    {
+                        if (listBoxTemplatesCompleted.GetSelected(i))
+                        {
+                            int count = 0;
+                            foreach (var UtidTotemplate in TemplateManagement.TemplatesCompleted)
+                            {
+                                if (listBoxTemplatesCompleted.Items[i].ToString() ==
+                                    GenerateEntryLine(UtidTotemplate.Value))
+                                {
+                                    Clipboard.SetText(GenerateEntryLine(UtidTotemplate.Value) + ":\r\n\r\n" +GenerateFullDebugOutput(UtidTotemplate.Value) + "\r\n");
                                     break;
                                 }
                                 count++;
