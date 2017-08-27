@@ -6,11 +6,15 @@ A plugin for KeePass v2 to change supported password entries automatically
 # Start - HowTo use
 Select branch master, go to Build/KeePass-Password-Changer and download the latest zip version of the plugin. The current version and the sha512 hash value of the zip file can be located in the README.md.   
 Unzip the content of the zip folder into the KeePass v2 Directory. It's recommended to have another Directory with the KeePass executable for the plugin, because the plugin contains too many files at the moment and deleting the plugin will be horrible afterwards ;)
+Release-Zip naming convention: KeePassPasswordChanger vX.X.X.X.zip
 
 **Important:** Let CefBrowser communicate through your firewall BEFORE you start a browser action. The best solution therefor is to execute it after you extracted the plugin. If the **DuckDuckgo.com** site shows up, you are ready to go :)
 
 
 # Rebuild it on your own :)
+
+## Known problems (Besides the requirements below)
+ - When building the KeePassPasswordChanger solution, a CSC Error 'Metadata file .dll could not be found' occurs. Most of the time it is the 'CSharpTest.Net.RpcLibrary.dll'. This can happen is you restart your computer. Remove the 'CSharpTest.Net.RpcLibrary.dll'(or the missing DLL) from the Extension project(like RPC-Communication) and re-add it again, this should solve the problem and you should be able to rebuild the project, regardless if the branch is 'DEV' or 'MASTER'. 
 
 ## Branches
  - Master: When using master branch, you get the plugin which can be used with KeePass v2
