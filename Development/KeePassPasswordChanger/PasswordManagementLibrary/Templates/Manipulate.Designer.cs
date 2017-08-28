@@ -35,8 +35,6 @@
             this.checkBoxSelectorIsRegex = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxTemplateVersion = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBoxUTID = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -64,7 +62,6 @@
             this.checkBoxLowerCase = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -87,7 +84,7 @@
             // 
             this.textBoxSelectorString.Location = new System.Drawing.Point(79, 19);
             this.textBoxSelectorString.Name = "textBoxSelectorString";
-            this.textBoxSelectorString.Size = new System.Drawing.Size(571, 20);
+            this.textBoxSelectorString.Size = new System.Drawing.Size(383, 20);
             this.textBoxSelectorString.TabIndex = 6;
             this.textBoxSelectorString.TextChanged += new System.EventHandler(this.textBoxSelectorString_TextChanged);
             // 
@@ -95,9 +92,9 @@
             // 
             this.groupBox1.Controls.Add(this.checkBoxSelectorIsRegex);
             this.groupBox1.Controls.Add(this.textBoxSelectorString);
-            this.groupBox1.Location = new System.Drawing.Point(12, 172);
+            this.groupBox1.Location = new System.Drawing.Point(456, 172);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(656, 47);
+            this.groupBox1.Size = new System.Drawing.Size(468, 47);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Bound URI: String Or Regex";
@@ -116,9 +113,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.textBoxTemplateVersion);
-            this.groupBox2.Location = new System.Drawing.Point(12, 119);
+            this.groupBox2.Location = new System.Drawing.Point(456, 119);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(656, 47);
+            this.groupBox2.Size = new System.Drawing.Size(468, 47);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Template Version: Int";
@@ -127,33 +124,16 @@
             // 
             this.textBoxTemplateVersion.Location = new System.Drawing.Point(6, 19);
             this.textBoxTemplateVersion.Name = "textBoxTemplateVersion";
-            this.textBoxTemplateVersion.Size = new System.Drawing.Size(644, 20);
+            this.textBoxTemplateVersion.Size = new System.Drawing.Size(456, 20);
             this.textBoxTemplateVersion.TabIndex = 3;
             this.textBoxTemplateVersion.TextChanged += new System.EventHandler(this.textBoxTemplateVersion_TextChanged);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.textBox1);
-            this.groupBox3.Location = new System.Drawing.Point(12, 66);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(656, 47);
-            this.groupBox3.TabIndex = 9;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Template Version: String";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(644, 20);
-            this.textBox1.TabIndex = 6;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.textBoxUTID);
-            this.groupBox4.Location = new System.Drawing.Point(12, 66);
+            this.groupBox4.Location = new System.Drawing.Point(12, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(656, 47);
+            this.groupBox4.Size = new System.Drawing.Size(912, 47);
             this.groupBox4.TabIndex = 9999999;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Unique Template ID: String";
@@ -163,16 +143,16 @@
             this.textBoxUTID.Location = new System.Drawing.Point(6, 19);
             this.textBoxUTID.Name = "textBoxUTID";
             this.textBoxUTID.ReadOnly = true;
-            this.textBoxUTID.Size = new System.Drawing.Size(644, 20);
+            this.textBoxUTID.Size = new System.Drawing.Size(900, 20);
             this.textBoxUTID.TabIndex = 999999;
             this.textBoxUTID.TextChanged += new System.EventHandler(this.textBoxUTID_TextChanged);
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.checkBoxAutomaticallyGenerateAndSavePassword);
-            this.groupBox5.Location = new System.Drawing.Point(12, 12);
+            this.groupBox5.Location = new System.Drawing.Point(456, 66);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(656, 47);
+            this.groupBox5.Size = new System.Drawing.Size(468, 47);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Generate new password and save when successfull : Bool";
@@ -180,9 +160,9 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.textBoxName);
-            this.groupBox6.Location = new System.Drawing.Point(12, 228);
+            this.groupBox6.Location = new System.Drawing.Point(456, 228);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(656, 47);
+            this.groupBox6.Size = new System.Drawing.Size(468, 47);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Name: String";
@@ -191,7 +171,7 @@
             // 
             this.textBoxName.Location = new System.Drawing.Point(6, 19);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(644, 20);
+            this.textBoxName.Size = new System.Drawing.Size(456, 20);
             this.textBoxName.TabIndex = 8;
             this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
             // 
@@ -204,9 +184,9 @@
             this.groupBox7.Controls.Add(this.buttonMoveUp);
             this.groupBox7.Controls.Add(this.buttonAddTemplateElement);
             this.groupBox7.Controls.Add(this.listBoxTemplateElements);
-            this.groupBox7.Location = new System.Drawing.Point(12, 281);
+            this.groupBox7.Location = new System.Drawing.Point(12, 66);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(438, 348);
+            this.groupBox7.Size = new System.Drawing.Size(438, 563);
             this.groupBox7.TabIndex = 19;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Template Elements";
@@ -277,7 +257,7 @@
             this.listBoxTemplateElements.FormattingEnabled = true;
             this.listBoxTemplateElements.Location = new System.Drawing.Point(6, 19);
             this.listBoxTemplateElements.Name = "listBoxTemplateElements";
-            this.listBoxTemplateElements.Size = new System.Drawing.Size(313, 316);
+            this.listBoxTemplateElements.Size = new System.Drawing.Size(313, 537);
             this.listBoxTemplateElements.TabIndex = 20;
             // 
             // groupBox8
@@ -295,7 +275,7 @@
             this.groupBox8.Controls.Add(this.checkBoxLowerCase);
             this.groupBox8.Location = new System.Drawing.Point(456, 281);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(212, 348);
+            this.groupBox8.Size = new System.Drawing.Size(468, 348);
             this.groupBox8.TabIndex = 9;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Password Creation Policy";
@@ -421,13 +401,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 641);
+            this.ClientSize = new System.Drawing.Size(940, 641);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -443,8 +422,6 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -466,8 +443,6 @@
         private System.Windows.Forms.CheckBox checkBoxSelectorIsRegex;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBoxTemplateVersion;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox textBoxUTID;
         private System.Windows.Forms.GroupBox groupBox5;
