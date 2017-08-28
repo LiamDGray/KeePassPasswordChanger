@@ -17,6 +17,7 @@ namespace KeePassPasswordChanger
         private const int HorizontalSpace = 6;
         private int _currentY = 19;
         Timer timer = new Timer();
+        private bool alreadyBrougthToFront = false;
 
         [DllImport("User32.dll")]
         public static extern Int32 SetForegroundWindow(int hWnd);
@@ -144,12 +145,17 @@ namespace KeePassPasswordChanger
                 timer.Stop();
                 try
                 {
-                    this.BeginInvoke((MethodInvoker) delegate()
+                    if (!CommandObject.KeepInFront.Value && !alreadyBrougthToFront)
                     {
-                        this.TopMost = true;
-                        BringToFront();
-                        SetForegroundWindow(Handle.ToInt32());
-                    });
+                        this.BeginInvoke((MethodInvoker) delegate()
+                        {
+                            this.TopMost = true;
+                            BringToFront();
+                            SetForegroundWindow(Handle.ToInt32());
+                        });
+                    }
+                    if (!CommandObject.KeepInFront.Value)
+                        alreadyBrougthToFront = true;
                 }
                 catch (Exception)
                 {
