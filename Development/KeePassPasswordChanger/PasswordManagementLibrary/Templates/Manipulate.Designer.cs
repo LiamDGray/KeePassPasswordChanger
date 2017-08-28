@@ -51,6 +51,7 @@
             this.buttonAddTemplateElement = new System.Windows.Forms.Button();
             this.listBoxTemplateElements = new System.Windows.Forms.ListBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.textBoxPasswordCreationPolicy = new System.Windows.Forms.TextBox();
             this.checkBoxExcludeLookAlikes = new System.Windows.Forms.CheckBox();
             this.checkBoxNoRepeating = new System.Windows.Forms.CheckBox();
             this.checkBoxBrackets = new System.Windows.Forms.CheckBox();
@@ -61,7 +62,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxPasswordLength = new System.Windows.Forms.TextBox();
             this.checkBoxLowerCase = new System.Windows.Forms.CheckBox();
-            this.textBoxPasswordCreationPolicy = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -223,6 +223,7 @@
             // 
             // buttonCloneTemplateElement
             // 
+            this.buttonCloneTemplateElement.Enabled = false;
             this.buttonCloneTemplateElement.Location = new System.Drawing.Point(325, 106);
             this.buttonCloneTemplateElement.Name = "buttonCloneTemplateElement";
             this.buttonCloneTemplateElement.Size = new System.Drawing.Size(105, 23);
@@ -298,6 +299,18 @@
             this.groupBox8.TabIndex = 9;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Password Creation Policy";
+            // 
+            // textBoxPasswordCreationPolicy
+            // 
+            this.textBoxPasswordCreationPolicy.BackColor = System.Drawing.SystemColors.Control;
+            this.textBoxPasswordCreationPolicy.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPasswordCreationPolicy.Location = new System.Drawing.Point(6, 229);
+            this.textBoxPasswordCreationPolicy.Multiline = true;
+            this.textBoxPasswordCreationPolicy.Name = "textBoxPasswordCreationPolicy";
+            this.textBoxPasswordCreationPolicy.ReadOnly = true;
+            this.textBoxPasswordCreationPolicy.Size = new System.Drawing.Size(200, 113);
+            this.textBoxPasswordCreationPolicy.TabIndex = 19;
+            this.textBoxPasswordCreationPolicy.Text = resources.GetString("textBoxPasswordCreationPolicy.Text");
             // 
             // checkBoxExcludeLookAlikes
             // 
@@ -403,18 +416,6 @@
             this.checkBoxLowerCase.Text = "Include Lowercase";
             this.checkBoxLowerCase.UseVisualStyleBackColor = true;
             this.checkBoxLowerCase.CheckedChanged += new System.EventHandler(this.checkBoxLowerCase_CheckedChanged);
-            // 
-            // textBoxPasswordCreationPolicy
-            // 
-            this.textBoxPasswordCreationPolicy.BackColor = System.Drawing.SystemColors.Control;
-            this.textBoxPasswordCreationPolicy.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxPasswordCreationPolicy.Location = new System.Drawing.Point(6, 229);
-            this.textBoxPasswordCreationPolicy.Multiline = true;
-            this.textBoxPasswordCreationPolicy.Name = "textBoxPasswordCreationPolicy";
-            this.textBoxPasswordCreationPolicy.ReadOnly = true;
-            this.textBoxPasswordCreationPolicy.Size = new System.Drawing.Size(200, 113);
-            this.textBoxPasswordCreationPolicy.TabIndex = 19;
-            this.textBoxPasswordCreationPolicy.Text = resources.GetString("textBoxPasswordCreationPolicy.Text");
             // 
             // Manipulate
             // 

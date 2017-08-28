@@ -407,6 +407,11 @@ namespace KeePassPasswordChanger.Templates
             List<TemplateElement> templateElements = new List<TemplateElement>();
 
 
+            SwitchWindowVisibility visibility = new SwitchWindowVisibility();
+            visibility.NewInstance();
+            visibility.Visible.Value = true;
+            templateElements.Add(new TemplateElement("show window", visibility));
+
             //Dont forget to change identifier to real one!
             LoadUrl url = new LoadUrl();
             url.NewInstance();
@@ -502,6 +507,11 @@ namespace KeePassPasswordChanger.Templates
             setJsPrompt.ExpectedMessageText.IsRegex.Value = true;
             setJsPrompt.ExpectedMessageText.Value.Value = "The following data would have been submitted";
             templateElements.Add(new TemplateElement("set jsdialog handler", handleJsDialog));
+
+            SwitchWindowVisibility visibility2 = new SwitchWindowVisibility();
+            visibility2.NewInstance();
+            visibility2.Visible.Value = false;
+            templateElements.Add(new TemplateElement("hide window", visibility2));
 
             BrowserAction clickSubmit = new BrowserAction();
             InvokeSubmit invokeSubmit = new InvokeSubmit();

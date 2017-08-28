@@ -26,8 +26,7 @@ namespace KeePassPasswordChanger.Templates
     public class Template : InputParameters,  ICloneable
    { 
         public bool AutomaticallyCloseWindowWhenOutOfCommands = true;
-
-        public const int ClassVersion = 1;
+        public const int TemplateVersionCurrentAvailable = 1;
         public static int counter = 0;
 
         //uniqueTemplateID
@@ -52,18 +51,7 @@ namespace KeePassPasswordChanger.Templates
 
         public List<TemplateElement> TemplateElements = new List<TemplateElement>();
 
-        public PasswordCreationPolicy PasswordCreationPolicy = new PasswordCreationPolicy()
-        {
-            Length = 50,
-            Brackets = true,
-            Digits = true,
-            ExcludeLookAlike = true,
-            LowerCase = true,
-            NoRepeatingCharacters = true,
-            Punctuation = true,
-            SpecialAscii = true,
-            UpperCase = true,
-        };
+       public PasswordCreationPolicy PasswordCreationPolicy = new PasswordCreationPolicy();
 
         private System.Timers.Timer _timer;
 
@@ -276,8 +264,16 @@ namespace KeePassPasswordChanger.Templates
        {
            LastTemplateElement = element.Name + " @ TemplateElement-ID " + element.UEID;
            BaseObject baseObject = (BaseObject) element.BrowserActionOrCommand;
-            if(baseObject.TimeoutInSec != null) 
-                baseObject.Timeout = new TimeSpan(0,0,baseObject.TimeoutInSec.Value);
+           if (baseObject is BrowserCommand)
+           {
+               if (baseObject.TimeoutInSec != null)
+                   baseObject.Timeout = new TimeSpan(0, 0, baseObject.TimeoutInSec.Value);
+           }
+           else if (baseObject is BrowserAction)
+           {
+                if (((BaseObject)((BrowserAction)baseObject).ActionObject).TimeoutInSec != null)
+                    baseObject.Timeout = new TimeSpan(0, 0, ((BaseObject)((BrowserAction)baseObject).ActionObject).TimeoutInSec.Value);
+            }
            //rework anyhow?
            //@ requirement calculation: is required a pwdef placeholder?
            foreach (var requiredParameterString in element.RequiredParameters)

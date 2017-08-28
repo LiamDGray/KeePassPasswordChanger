@@ -66,10 +66,20 @@ namespace KeePassPasswordChanger.Templates
             textBoxUEID.Text = TemplateElement.UEID;
             textBoxUEID.TextChanged += TextBoxUeidOnTextChanged;
 
-            if (((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec != null)
-                textBoxTimeOut.Text = ((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec.Value.ToString();
-            else
-                textBoxTimeOut.Text = "";
+            if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserCommand)
+            {
+                if (((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec != null)
+                    textBoxTimeOut.Text = ((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec.Value.ToString();
+                else
+                    textBoxTimeOut.Text = "";
+            }
+            else if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserAction)
+            {
+                if (((BaseObject)((BrowserAction)((BaseObject)TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec != null)
+                    textBoxTimeOut.Text = ((BaseObject)((BrowserAction)((BaseObject)TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec.Value.ToString();
+                else
+                    textBoxTimeOut.Text = "";
+            }
 
             List<KeyValuePairEx<string, object>> parameters = GetParameters();
             foreach (var identifierToObjectKeyValuePair in parameters)
@@ -1144,19 +1154,24 @@ namespace KeePassPasswordChanger.Templates
                         foreach (Control control in groupBox.Controls)
                         {
                             if (control is TextBox && control.Name.Contains("textBoxExpectedNumber"))
+                            {
+                                if (((TextBox) control).Text == "")
+                                    ((TextBox) control).Text = "0";
                                 selector.ExpectedNumberOfElements.Value = Convert.ToInt32(((TextBox) control).Text);
+
+                            }
                             else if (control is TextBox && control.Name.Contains("textBoxIdentifier"))
                                 selector.SelectorString = ((TextBox) control).Text;
                             else if (control is ComboBox && control.Name.Contains("comboBoxSelectOn"))
                             {
-                                ComboBox comboBox = (ComboBox)control;
+                                ComboBox comboBox = (ComboBox) control;
                                 foreach (var value in Enum.GetValues(typeof(BrowserAction.ExecuteActionOn)))
                                 {
                                     if (value.ToString() == comboBox.Text)
                                     {
                                         selector.SelectorExecuteActionOn =
-                                           (BrowserAction.ExecuteActionOn)
-                                           Enum.Parse(typeof(BrowserAction.ExecuteActionOn), comboBox.Text);
+                                            (BrowserAction.ExecuteActionOn)
+                                            Enum.Parse(typeof(BrowserAction.ExecuteActionOn), comboBox.Text);
                                     }
                                 }
                             }
@@ -1791,12 +1806,26 @@ namespace KeePassPasswordChanger.Templates
             BaseObject baseObject = (BaseObject) TemplateElement.BrowserActionOrCommand;
             if (textBox.Text == "")
             {
-                baseObject.TimeoutInSec = null;
+                if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserCommand)
+                {
+                    ((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec = null;
+                }
+                else if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserAction)
+                {
+                    ((BaseObject) ((BrowserAction) ((BaseObject) TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec = null;
+                }
                 return;
             }
             try
             {
-                baseObject.TimeoutInSec = Convert.ToInt32(textBox.Text);
+                if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserCommand)
+                {
+                    ((BaseObject)TemplateElement.BrowserActionOrCommand).TimeoutInSec = Convert.ToInt32(textBox.Text);
+                }
+                else if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserAction)
+                {
+                    ((BaseObject)((BrowserAction)((BaseObject)TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec = Convert.ToInt32(textBox.Text);
+                }
             }
             catch (Exception)
             {

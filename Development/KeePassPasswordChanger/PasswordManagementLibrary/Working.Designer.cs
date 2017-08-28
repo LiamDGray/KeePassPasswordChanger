@@ -46,7 +46,6 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.listBoxTemplatesCompleted = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.listBoxFailedTemplates = new System.Windows.Forms.ListBox();
             this.groupBoxQueuedTemplates.SuspendLayout();
             this.groupBoxActiveTemplates.SuspendLayout();
@@ -186,7 +185,8 @@
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(710, 20);
             this.textBox3.TabIndex = 16;
-            this.textBox3.Text = "Info: You can double click on an active element to copy it to your clipboard.";
+            this.textBox3.Text = "Info: You can click on any line in this three password change boxes to copy the w" +
+    "hole output of the template elements to your clipboard.";
             // 
             // listBoxActiveTemplates
             // 
@@ -234,7 +234,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.listBoxFailedTemplates);
             this.groupBox1.Location = new System.Drawing.Point(747, 275);
             this.groupBox1.Name = "groupBox1";
@@ -243,25 +242,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Failed password changes";
             // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(6, 19);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(344, 30);
-            this.textBox2.TabIndex = 15;
-            this.textBox2.Text = "Info: You can double click on a failed element to copy it to your clipboard.";
-            // 
             // listBoxFailedTemplates
             // 
             this.listBoxFailedTemplates.FormattingEnabled = true;
-            this.listBoxFailedTemplates.Location = new System.Drawing.Point(6, 58);
+            this.listBoxFailedTemplates.Location = new System.Drawing.Point(6, 19);
             this.listBoxFailedTemplates.Name = "listBoxFailedTemplates";
             this.listBoxFailedTemplates.ScrollAlwaysVisible = true;
-            this.listBoxFailedTemplates.Size = new System.Drawing.Size(344, 251);
+            this.listBoxFailedTemplates.Size = new System.Drawing.Size(344, 290);
             this.listBoxFailedTemplates.TabIndex = 3;
             this.listBoxFailedTemplates.SelectedIndexChanged += new System.EventHandler(this.listBoxFailedTemplates_SelectedIndexChanged);
             // 
@@ -292,7 +279,6 @@
             this.groupBoxCompleted.ResumeLayout(false);
             this.groupBoxCompleted.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -316,7 +302,6 @@
         private System.Windows.Forms.ListBox listBoxFailedTemplates;
         private System.Windows.Forms.Button buttonEnqueueEntry;
         private System.Windows.Forms.Button buttonRemovedEntry;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
     }

@@ -49,10 +49,17 @@ namespace KeePassPasswordChanger
                 text += ".";
             _dotcounter++;
             _dotcounter = _dotcounter %3;
-            this.BeginInvoke((MethodInvoker) delegate()
+            try
             {
-                labelDescription.Text = text;
-            });
+                this.BeginInvoke((MethodInvoker) delegate()
+                {
+                    labelDescription.Text = text;
+                });
+            }
+            catch
+            {
+                
+            }
             //possible async
                 _dottedTimer.Start();
         }
@@ -637,7 +644,7 @@ namespace KeePassPasswordChanger
                                     checkingEntry = GenerateActiveEntryLine(UtidTotemplate.Value);
                                 if (currentEntry == checkingEntry)
                                 {
-                                    Clipboard.SetText(GenerateActiveEntryLine(UtidTotemplate.Value));
+                                    Clipboard.SetText(GenerateEntryLine(UtidTotemplate.Value) + ":\r\n\r\n" + GenerateFullDebugOutput(UtidTotemplate.Value) + "\r\n");
                                     break;
                                 }
                                 count++;
