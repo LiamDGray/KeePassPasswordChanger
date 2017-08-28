@@ -7,6 +7,7 @@ using CefBrowserControl.BrowserActions.Elements.EventTypes;
 using CefBrowserControl.BrowserActions.Helper;
 using CefBrowserControl.BrowserCommands;
 using CefBrowserControl.Resources;
+using KeePassLib.Collections;
 
 namespace KeePassPasswordChanger.Templates
 {
@@ -35,6 +36,7 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(PasswordCreationPolicy))]
     [XmlInclude(typeof(BrowserAction))]
     [XmlInclude(typeof(BrowserCommand))]
+    [XmlInclude(typeof(Selector))]
     public class TemplateElement : ICloneable, IInstanciateInputParameters
     {
         //Always Run CheckRequiredParameters after adding elements to this list!
@@ -165,7 +167,20 @@ namespace KeePassPasswordChanger.Templates
             string conditions = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(SuccessConditions, SuccessConditions.GetType());
             string conditionBasedTemplateElements = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(ConditionBasedAppendedTemplateElements, ConditionBasedAppendedTemplateElements.GetType());
             //return (TemplateElement) this.MemberwiseClone();
-            TemplateElement newTemplateElement = (TemplateElement) this.MemberwiseClone();
+
+            //BaseObject baseObjectOriginal;
+            //if (BrowserActionOrCommand is BrowserCommand)
+            //    baseObjectOriginal = (BaseObject)BrowserActionOrCommand;
+            //else
+            //{
+            //    baseObjectOriginal = (BaseObject)((BrowserAction)BrowserActionOrCommand).ActionObject;
+            //}
+            //List<KeyValuePairEx<string, object>> inputParametersAvailable = baseObjectOriginal.InputParameterAvailable;
+            //string serializedInputParametersAvailable = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(inputParametersAvailable, typeof(List<KeyValuePairEx<string, object>>));
+            
+                
+                
+                TemplateElement newTemplateElement = (TemplateElement) this.MemberwiseClone();
 
             newTemplateElement.BrowserActionOrCommand = SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(browserOrActionCommand, type);
 
@@ -187,6 +202,17 @@ namespace KeePassPasswordChanger.Templates
                 newConditionBasedAppendedTemplateElements.Add(newKeyValuePairEx);
             }
             newTemplateElement.ConditionBasedAppendedTemplateElements = newConditionBasedAppendedTemplateElements;
+
+            //BaseObject baseObjectCloned;
+            //if (newTemplateElement.BrowserActionOrCommand is BrowserCommand)
+            //    baseObjectCloned = (BaseObject)newTemplateElement.BrowserActionOrCommand;
+            //else
+            //{
+            //    baseObjectCloned = (BaseObject)((BrowserAction)newTemplateElement.BrowserActionOrCommand).ActionObject;
+            //}
+            //List<KeyValuePairEx<string, object>> deSerializedInputParametersAvailable = (List < KeyValuePairEx < string, object>> )SerializationDotNet2.Xml.Deserializer.DeserializeObjectFromString(serializedInputParametersAvailable, typeof(List<KeyValuePairEx<string, object>>));
+            //baseObjectCloned.InputParameterAvailable = deSerializedInputParametersAvailable;
+
 
             return newTemplateElement;
         }
