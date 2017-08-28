@@ -26,8 +26,7 @@ namespace KeePassPasswordChanger.Templates
     public class Template : InputParameters,  ICloneable
    { 
         public bool AutomaticallyCloseWindowWhenOutOfCommands = true;
-
-        public const int ClassVersion = 1;
+        public const int TemplateVersionCurrentAvailable = 1;
         public static int counter = 0;
 
         //uniqueTemplateID
