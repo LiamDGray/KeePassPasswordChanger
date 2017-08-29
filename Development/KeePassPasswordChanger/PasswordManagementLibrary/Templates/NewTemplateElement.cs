@@ -82,6 +82,9 @@ namespace KeePassPasswordChanger.Templates
             GetInnerHtml getInnerHtml = new GetInnerHtml();
             getInnerHtml.NewInstance();
             availableBaseObjects.Add(getInnerHtml);
+            SetValue setValue = new SetValue();
+            setValue.NewInstance();
+            availableBaseObjects.Add(setValue);
         }
 
         private void NewTemplateElement_Load(object sender, EventArgs e)
