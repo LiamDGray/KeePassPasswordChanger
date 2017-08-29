@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CefBrowserControl;
 using CefBrowserControl.BrowserActions.Elements;
 using CefBrowserControl.BrowserActions.Elements.EventTypes;
+using CefBrowserControl.BrowserActions.Elements.ExecJavascriptHelper;
 using CefBrowserControl.BrowserCommands;
 
 namespace KeePassPasswordChanger.Templates
@@ -75,6 +76,15 @@ namespace KeePassPasswordChanger.Templates
             SiteLoaded siteLoaded = new SiteLoaded();
             siteLoaded.NewInstance();
             availableBaseObjects.Add(siteLoaded);
+            GetInnerText getInnerText = new GetInnerText();
+            getInnerText.NewInstance();
+            availableBaseObjects.Add(getInnerText);
+            GetInnerHtml getInnerHtml = new GetInnerHtml();
+            getInnerHtml.NewInstance();
+            availableBaseObjects.Add(getInnerHtml);
+            SetValue setValue = new SetValue();
+            setValue.NewInstance();
+            availableBaseObjects.Add(setValue);
         }
 
         private void NewTemplateElement_Load(object sender, EventArgs e)
