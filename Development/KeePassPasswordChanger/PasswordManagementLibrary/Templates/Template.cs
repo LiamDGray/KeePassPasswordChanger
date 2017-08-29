@@ -561,8 +561,6 @@ namespace KeePassPasswordChanger.Templates
                                 if (!RunTemplate(conditionsToTemplateElement.Value, _cefControl))
                                     return false;
                             }
-                            else
-                                return false;
                         }
                         foreach (var elementSuccessCondition in element.SuccessConditions)
                         {

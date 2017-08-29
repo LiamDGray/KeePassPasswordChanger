@@ -66,11 +66,11 @@
             // listBoxRemainingTemplates
             // 
             this.listBoxRemainingTemplates.FormattingEnabled = true;
-            this.listBoxRemainingTemplates.Location = new System.Drawing.Point(6, 84);
+            this.listBoxRemainingTemplates.Location = new System.Drawing.Point(6, 76);
             this.listBoxRemainingTemplates.Name = "listBoxRemainingTemplates";
             this.listBoxRemainingTemplates.ScrollAlwaysVisible = true;
             this.listBoxRemainingTemplates.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxRemainingTemplates.Size = new System.Drawing.Size(344, 238);
+            this.listBoxRemainingTemplates.Size = new System.Drawing.Size(344, 381);
             this.listBoxRemainingTemplates.TabIndex = 3;
             this.listBoxRemainingTemplates.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxRemainingTemplates_MouseDoubleClick);
             // 
@@ -86,14 +86,14 @@
             this.groupBoxQueuedTemplates.Controls.Add(this.listBoxRemainingTemplates);
             this.groupBoxQueuedTemplates.Location = new System.Drawing.Point(17, 56);
             this.groupBoxQueuedTemplates.Name = "groupBoxQueuedTemplates";
-            this.groupBoxQueuedTemplates.Size = new System.Drawing.Size(358, 536);
+            this.groupBoxQueuedTemplates.Size = new System.Drawing.Size(712, 536);
             this.groupBoxQueuedTemplates.TabIndex = 5;
             this.groupBoxQueuedTemplates.TabStop = false;
             this.groupBoxQueuedTemplates.Text = "Waiting queue: remaining password changes";
             // 
             // buttonEnqueueEntry
             // 
-            this.buttonEnqueueEntry.Location = new System.Drawing.Point(6, 476);
+            this.buttonEnqueueEntry.Location = new System.Drawing.Point(356, 463);
             this.buttonEnqueueEntry.Name = "buttonEnqueueEntry";
             this.buttonEnqueueEntry.Size = new System.Drawing.Size(344, 23);
             this.buttonEnqueueEntry.TabIndex = 14;
@@ -103,7 +103,7 @@
             // 
             // buttonRemovedEntry
             // 
-            this.buttonRemovedEntry.Location = new System.Drawing.Point(6, 328);
+            this.buttonRemovedEntry.Location = new System.Drawing.Point(6, 463);
             this.buttonRemovedEntry.Name = "buttonRemovedEntry";
             this.buttonRemovedEntry.Size = new System.Drawing.Size(344, 23);
             this.buttonRemovedEntry.TabIndex = 13;
@@ -114,7 +114,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 68);
+            this.label3.Location = new System.Drawing.Point(6, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(141, 13);
             this.label3.TabIndex = 12;
@@ -123,7 +123,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 359);
+            this.label2.Location = new System.Drawing.Point(356, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 13);
             this.label2.TabIndex = 11;
@@ -132,11 +132,11 @@
             // listBoxRemovedTemplates
             // 
             this.listBoxRemovedTemplates.FormattingEnabled = true;
-            this.listBoxRemovedTemplates.Location = new System.Drawing.Point(6, 375);
+            this.listBoxRemovedTemplates.Location = new System.Drawing.Point(356, 76);
             this.listBoxRemovedTemplates.Name = "listBoxRemovedTemplates";
             this.listBoxRemovedTemplates.ScrollAlwaysVisible = true;
             this.listBoxRemovedTemplates.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxRemovedTemplates.Size = new System.Drawing.Size(344, 95);
+            this.listBoxRemovedTemplates.Size = new System.Drawing.Size(344, 381);
             this.listBoxRemovedTemplates.TabIndex = 10;
             this.listBoxRemovedTemplates.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxRemovedTemplates_MouseDoubleClick);
             // 
@@ -148,7 +148,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(344, 46);
+            this.textBox1.Size = new System.Drawing.Size(700, 46);
             this.textBox1.TabIndex = 9;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
@@ -158,7 +158,7 @@
             this.buttonStartChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStartChange.Location = new System.Drawing.Point(6, 507);
             this.buttonStartChange.Name = "buttonStartChange";
-            this.buttonStartChange.Size = new System.Drawing.Size(344, 23);
+            this.buttonStartChange.Size = new System.Drawing.Size(694, 23);
             this.buttonStartChange.TabIndex = 8;
             this.buttonStartChange.Text = "Start";
             this.buttonStartChange.UseVisualStyleBackColor = true;
@@ -168,7 +168,7 @@
             // 
             this.groupBoxActiveTemplates.Controls.Add(this.textBox3);
             this.groupBoxActiveTemplates.Controls.Add(this.listBoxActiveTemplates);
-            this.groupBoxActiveTemplates.Location = new System.Drawing.Point(381, 56);
+            this.groupBoxActiveTemplates.Location = new System.Drawing.Point(735, 56);
             this.groupBoxActiveTemplates.Name = "groupBoxActiveTemplates";
             this.groupBoxActiveTemplates.Size = new System.Drawing.Size(726, 213);
             this.groupBoxActiveTemplates.TabIndex = 7;
@@ -202,7 +202,7 @@
             // 
             this.groupBoxCompleted.Controls.Add(this.textBox4);
             this.groupBoxCompleted.Controls.Add(this.listBoxTemplatesCompleted);
-            this.groupBoxCompleted.Location = new System.Drawing.Point(381, 275);
+            this.groupBoxCompleted.Location = new System.Drawing.Point(735, 275);
             this.groupBoxCompleted.Name = "groupBoxCompleted";
             this.groupBoxCompleted.Size = new System.Drawing.Size(360, 317);
             this.groupBoxCompleted.TabIndex = 7;
@@ -235,7 +235,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.listBoxFailedTemplates);
-            this.groupBox1.Location = new System.Drawing.Point(747, 275);
+            this.groupBox1.Location = new System.Drawing.Point(1101, 275);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(360, 317);
             this.groupBox1.TabIndex = 8;
@@ -256,7 +256,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1131, 608);
+            this.ClientSize = new System.Drawing.Size(1480, 608);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBoxCompleted);
             this.Controls.Add(this.groupBoxActiveTemplates);
