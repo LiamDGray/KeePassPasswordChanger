@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using CefBrowserControl;
 using CefBrowserControl.BrowserActions.Elements;
 using CefBrowserControl.BrowserActions.Elements.EventTypes;
+using CefBrowserControl.BrowserActions.Elements.ExecJavascriptHelper;
 using CefBrowserControl.BrowserActions.Helper;
 using CefBrowserControl.BrowserCommands;
 using CefBrowserControl.Resources;
@@ -286,6 +287,10 @@ namespace KeePassPasswordChanger.Templates
                     ((SiteLoaded)browserAction.ActionObject).ReadAvailableInputParameters();
                 else if (browserAction.ActionObject is TextToTypeIn && browserAction.ActionObject.GetType().Name == typeof(TextToTypeIn).Name)
                     ((TextToTypeIn)browserAction.ActionObject).ReadAvailableInputParameters();
+                else if (browserAction.ActionObject is GetInnerText && browserAction.ActionObject.GetType().Name == typeof(GetInnerText).Name)
+                    ((GetInnerText)browserAction.ActionObject).ReadAvailableInputParameters();
+                else if (browserAction.ActionObject is GetInnerHtml && browserAction.ActionObject.GetType().Name == typeof(GetInnerHtml).Name)
+                    ((GetInnerHtml)browserAction.ActionObject).ReadAvailableInputParameters();
                 else
                     ExceptionHandling.Handling.GetException("Unexpected",
                         new Exception("Browser Action Object should be found!"));
