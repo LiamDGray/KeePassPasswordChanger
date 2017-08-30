@@ -4,7 +4,7 @@ A plugin for KeePass v2 to change supported password entries automatically
 **Notice** - Dev docs are unavailable at the moment. Template instructions will follow!
 
 # Start - HowTo use
-Select branch master, go to Build/KeePass-Password-Changer and download the latest zip version of the plugin. The current version and the sha512 hash value of the zip file can be located in the README.md.   
+Select branch master, go to [Build/KeePass-Password-Changer](https://github.com/phi-el/KeePassPasswordChanger/tree/master/Build/KeePass-Password-Changer) and download the latest zip version of the plugin. The current version and the sha512 hash value of the zip file can be located in the README.md of the containing directory.   
 Unzip the content of the zip folder into the KeePass v2 Directory. It's recommended to have another Directory with the KeePass executable for the plugin, because the plugin contains too many files at the moment and deleting the plugin will be horrible afterwards ;)
 Release-Zip naming convention: KeePassPasswordChanger vX.X.X.X.zip
 
