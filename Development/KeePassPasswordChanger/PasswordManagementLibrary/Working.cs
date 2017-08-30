@@ -181,7 +181,7 @@ namespace KeePassPasswordChanger
                                     labelDescription.Text = "Finished with changing";
                                 });
                                 TemplateManagement.StopTemplateManagement();
-                                KeePassPasswordChangerExt.SaveCurrentDb();
+                                //KeePassPasswordChangerExt.SaveCurrentDb();
 
                                 FinishPasswordChangeProcess();
                             }
