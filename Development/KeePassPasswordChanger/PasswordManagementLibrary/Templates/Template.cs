@@ -345,7 +345,7 @@ namespace KeePassPasswordChanger.Templates
                                     firstOperand = browserCommandCompleted.Completed.ToString();
                                 else if (firstOperand.Contains(BaseObject.ConvertStringToPlaceholderString("output")))
                                 {
-                                    firstOperand = GetValueFromEncodedTemplateOperand(firstOperand, element);
+                                    firstOperand = GetValueFromEncodedTemplateOperand(firstOperand, conditionsToTemplateElement.Value);
                                 }
                                 else if (element.RequiredParameters.Contains(firstOperand))
                                 {
@@ -364,7 +364,7 @@ namespace KeePassPasswordChanger.Templates
                                     secondOperand = browserCommandCompleted.Completed.ToString();
                                 else if (secondOperand.Contains(BaseObject.ConvertStringToPlaceholderString("output")))
                                 {
-                                    secondOperand = GetValueFromEncodedTemplateOperand(firstOperand, element);
+                                    secondOperand = GetValueFromEncodedTemplateOperand(firstOperand, conditionsToTemplateElement.Value);
                                 }
                                 else if (element.RequiredParameters.Contains(secondOperand))
                                 {
@@ -518,7 +518,7 @@ namespace KeePassPasswordChanger.Templates
                                     firstOperand = subObject.Completed.ToString();
                                 else if (firstOperand.Contains(BaseObject.ConvertStringToPlaceholderString("output")))
                                 {
-                                    firstOperand = GetValueFromEncodedTemplateOperand(firstOperand, element);
+                                    firstOperand = GetValueFromEncodedTemplateOperand(firstOperand, conditionsToTemplateElement.Value);
                                 }
                                 else if (element.RequiredParameters.Contains(firstOperand))
                                 {
@@ -537,7 +537,7 @@ namespace KeePassPasswordChanger.Templates
                                     secondOperand = subObject.Completed.ToString();
                                 else if (secondOperand.Contains(BaseObject.ConvertStringToPlaceholderString("output")))
                                 {
-                                    secondOperand = GetValueFromEncodedTemplateOperand(firstOperand, element);
+                                    secondOperand = GetValueFromEncodedTemplateOperand(firstOperand, conditionsToTemplateElement.Value);
                                 }
                                 else if (element.RequiredParameters.Contains(secondOperand))
                                 {
@@ -690,19 +690,13 @@ namespace KeePassPasswordChanger.Templates
             string ueid = operandsList[1], name = operandsList[2];
             if (ueid == "")
                 ueid = currentElement.UEID;
-            foreach (var templateElement in TemplateElements)
+
+            foreach (var ueidToRessource in AvailableResources)
             {
-                if (templateElement.UEID == ueid)
-                {
-                    foreach (var returnedOutput in ((BaseObject)templateElement.BrowserActionOrCommand).ReturnedOutput)
-                    {
-                        if (returnedOutput.Key == name)
-                        {
-                            return returnedOutput.Value;
-                        }
-                    }
-                }
+                if (ueidToRessource.Value is Text && ueidToRessource.Key == operand)
+                    return ((Text) ueidToRessource.Value).Value.ReadString();
             }
+
             ExceptionHandling.Handling.GetException("Unexpected", new Exception(
                 "Your template element could not get the output from the desired element... sorry get better templates"));
             return null;
