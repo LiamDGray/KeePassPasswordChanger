@@ -43,6 +43,9 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(GetInnerHtml))]
     [XmlInclude(typeof(GetInnerText))]
     [XmlInclude(typeof(SetValue))]
+    [XmlInclude(typeof(SecondsToWait))]
+    [XmlInclude(typeof(InvokeFullKeyboardEvent))]
+
 
     public class TemplateElement : ICloneable, IInstanciateInputParameters
     {
@@ -299,6 +302,10 @@ namespace KeePassPasswordChanger.Templates
                     ((GetInnerHtml)browserAction.ActionObject).ReadAvailableInputParameters();
                 else if (browserAction.ActionObject is SetValue && browserAction.ActionObject.GetType().Name == typeof(SetValue).Name)
                     ((SetValue)browserAction.ActionObject).ReadAvailableInputParameters();
+                else if (browserAction.ActionObject is SecondsToWait && browserAction.ActionObject.GetType().Name == typeof(SecondsToWait).Name)
+                    ((SecondsToWait)browserAction.ActionObject).ReadAvailableInputParameters();
+                else if (browserAction.ActionObject is InvokeFullKeyboardEvent && browserAction.ActionObject.GetType().Name == typeof(InvokeFullKeyboardEvent).Name)
+                    ((InvokeFullKeyboardEvent)browserAction.ActionObject).ReadAvailableInputParameters();
                 else
                     ExceptionHandling.Handling.GetException("Unexpected",
                         new Exception("Browser Action Object should be found!"));
