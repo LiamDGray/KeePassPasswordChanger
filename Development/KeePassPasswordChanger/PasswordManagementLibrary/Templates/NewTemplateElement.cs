@@ -85,6 +85,12 @@ namespace KeePassPasswordChanger.Templates
             SetValue setValue = new SetValue();
             setValue.NewInstance();
             availableBaseObjects.Add(setValue);
+            SecondsToWait secondsToWait = new SecondsToWait();
+            secondsToWait.NewInstance();
+            availableBaseObjects.Add(secondsToWait);
+            InvokeFullKeyboardEvent invokeFullKeyBoardEvent = new InvokeFullKeyboardEvent();
+            invokeFullKeyBoardEvent.NewInstance();
+            availableBaseObjects.Add(invokeFullKeyBoardEvent);
         }
 
         private void NewTemplateElement_Load(object sender, EventArgs e)
