@@ -181,8 +181,8 @@ namespace KeePassPasswordChanger
                                     labelDescription.Text = "Finished with changing";
                                 });
                                 TemplateManagement.StopTemplateManagement();
-                                //KeePassPasswordChangerExt.SaveCurrentDb();
-
+                                KeePassPasswordChangerExt.SaveCurrentDb();
+                                TopMost = true;
                                 FinishPasswordChangeProcess();
                             }
                         });
@@ -552,6 +552,7 @@ namespace KeePassPasswordChanger
                 _listUpdates.Start();
                 _dottedTimer.Start();
                 TemplateManagement.StartTemplateManagement();
+                TopMost = false;
                 listBoxRemainingTemplates.Enabled = false;
                 listBoxRemovedTemplates.Enabled = false;
             }

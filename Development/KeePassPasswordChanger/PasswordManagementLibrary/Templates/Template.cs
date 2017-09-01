@@ -238,7 +238,7 @@ namespace KeePassPasswordChanger.Templates
                                    entry.LastModificationTime = TimeUtil.ToUtc(DateTime.Now, false);
                                    KeePassPasswordChangerExt.RefreshUiEntry(entry);
                                });
-                               KeePassPasswordChangerExt.SaveCurrentDb();
+                               //KeePassPasswordChangerExt.SaveCurrentDb();
                            }
                        }
                        TemplateManagement.TemplatesInTransit.Remove(UTID);
