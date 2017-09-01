@@ -689,7 +689,10 @@ namespace KeePassPasswordChanger.Templates
                     new Exception("The overloaded list is not valid"));
             string ueid = operandsList[1], name = operandsList[2];
             if (ueid == "")
+            {
                 ueid = currentElement.UEID;
+                operand = operand.Replace(BaseObject.ConvertStringToPlaceholderString(""), BaseObject.ConvertStringToPlaceholderString(ueid));
+            }
 
             foreach (var ueidToRessource in AvailableResources)
             {
