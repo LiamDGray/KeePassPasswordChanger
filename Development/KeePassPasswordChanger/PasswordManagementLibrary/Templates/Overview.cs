@@ -589,6 +589,30 @@ namespace KeePassPasswordChanger.Templates
             RefreshUI();
         }
 
+        private void CleanTemplateElement(TemplateElement templateElement)
+        {
+            BaseObject baseObject = ((BaseObject) templateElement.BrowserActionOrCommand);
+            baseObject.InputParameterAvailable = null;
+            if (templateElement.AppendedTemplateElement != null)
+                CleanTemplateElement(templateElement.AppendedTemplateElement);
+            foreach (var conditionsToTemplateElement in templateElement.ConditionBasedAppendedTemplateElements)
+            {
+                if (conditionsToTemplateElement.Value != null)
+                    CleanTemplateElement(conditionsToTemplateElement.Value);
+            }
+        }
+
+        private Template CleanTemplate(Template template)
+        {
+            template.AvailableResources = null;
+            template.InputParameterAvailable = null;
+            foreach (var templateTemplateElement in template.TemplateElements)
+            {
+                CleanTemplateElement(templateTemplateElement);
+            }
+            return template;
+        }
+
         private bool AddTemplate(Template template)
         {
             bool foundAnotherEntry = false;
@@ -621,7 +645,8 @@ namespace KeePassPasswordChanger.Templates
             
             if (foundAnotherEntry)
                 return false;
-            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(template,
+
+            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(CleanTemplate(template),
                 template.GetType());
             string encodedEntry = EncodingEx.Base64.Encoder.EncodeString(Encoding.UTF8, serializedEntry);
             PwEntry entry = new PwEntry(true, true);
@@ -675,7 +700,7 @@ namespace KeePassPasswordChanger.Templates
                 MessageBox.Show("There are too many templates that match on the bound URL or share the same UTID");
                 return false;
             }
-            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(template,
+            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(CleanTemplate(template),
                 template.GetType());
             string encodedEntry = EncodingEx.Base64.Encoder.EncodeString(Encoding.UTF8, serializedEntry);
             singlePwEntry.Strings.Set(PwDefs.NotesField, new ProtectedString(true, encodedEntry));

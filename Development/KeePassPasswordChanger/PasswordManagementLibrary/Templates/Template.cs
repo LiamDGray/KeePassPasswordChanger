@@ -24,19 +24,21 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(BrowserCommand))]
     [Serializable]
     public class Template : InputParameters,  ICloneable
-   { 
-        public bool AutomaticallyCloseWindowWhenOutOfCommands = true;
-        public const int TemplateVersionCurrentAvailable = 1;
+   {
+        public static bool AutomaticallyCloseWindowWhenOutOfCommands = true;
+       public const int TemplateVersionCurrentAvailable = 1;
         public static int counter = 0;
 
         //uniqueTemplateID
         public string UTID { get; set; }
 
         //for template run and browser identification
+        [XmlIgnore]
         public string UID { get; set; }
 
         public int MaxTries;
 
+        [XmlIgnore]
         public int UsedTries;
 
         //For updates?
@@ -47,28 +49,36 @@ namespace KeePassPasswordChanger.Templates
 
        public string Name = "";
 
+        [XmlIgnore]
         public List<KeyValuePairEx<string, object>> AvailableResources;
 
         public List<TemplateElement> TemplateElements = new List<TemplateElement>();
 
        public PasswordCreationPolicy PasswordCreationPolicy = new PasswordCreationPolicy();
 
+        [XmlIgnore]
         private System.Timers.Timer _timer;
 
+        [XmlIgnore]
         private CefControl _cefControl;
 
-       public bool Completed;
+        public bool Completed;
 
-       public bool Successful;
+        public bool Successful;
 
-       public string UsedEntryName;
+        [XmlIgnore]
+        public string UsedEntryName;
 
-       public string PwUuid;
-       public byte[] PwUidBytes;
+        [XmlIgnore]
+        public string PwUuid;
+        [XmlIgnore]
+        public byte[] PwUidBytes;
 
-       public string LastTemplateElement = "";
+        [XmlIgnore]
+        public string LastTemplateElement = "";
 
-       public string LastTemplateElementFailureReason = "";
+        [XmlIgnore]
+        public string LastTemplateElementFailureReason = "";
 
        public bool SetNewPasswordWhenSuccess = true;
 
