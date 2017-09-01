@@ -33,7 +33,7 @@ namespace KeePassPasswordChanger
         private ToolStripMenuItem _menuItemChangeAllPasswords;
         private const string MenuChangeAllPasswords = "Change all passwords";
         private ToolStripMenuItem _menuItemChangeOldEntries;
-        private const string MenuChangeOldEntries = "Change passwords which have not been updated since ...";
+        private const string MenuChangeOldEntries = "Change passwords which have not been updated before ...";
 
 
         private ToolStripMenuItem _menuItemAbout;

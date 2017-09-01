@@ -173,7 +173,7 @@ namespace KeePassPasswordChanger
                             if (templatesReady.Count == 0 &&
                                 templatesInTransit.Count == 0)
                             {
-                                ControlBox = true;
+                                KeePassPasswordChangerExt.SaveCurrentDb();
                                 _dottedTimer.Stop();
                                 _listUpdates.Stop();
                                 this.BeginInvoke((MethodInvoker) delegate()
@@ -181,7 +181,7 @@ namespace KeePassPasswordChanger
                                     labelDescription.Text = "Finished with changing";
                                 });
                                 TemplateManagement.StopTemplateManagement();
-                                KeePassPasswordChangerExt.SaveCurrentDb();
+                                ControlBox = true;
                                 TopMost = true;
                                 FinishPasswordChangeProcess();
                             }
