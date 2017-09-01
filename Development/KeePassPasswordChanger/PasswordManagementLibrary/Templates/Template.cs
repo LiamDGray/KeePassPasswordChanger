@@ -24,19 +24,21 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(BrowserCommand))]
     [Serializable]
     public class Template : InputParameters,  ICloneable
-   { 
-        public bool AutomaticallyCloseWindowWhenOutOfCommands = true;
-        public const int TemplateVersionCurrentAvailable = 1;
+   {
+        public static bool AutomaticallyCloseWindowWhenOutOfCommands = true;
+       public const int TemplateVersionCurrentAvailable = 1;
         public static int counter = 0;
 
         //uniqueTemplateID
         public string UTID { get; set; }
 
         //for template run and browser identification
+        [XmlIgnore]
         public string UID { get; set; }
 
         public int MaxTries;
 
+        [XmlIgnore]
         public int UsedTries;
 
         //For updates?
@@ -47,28 +49,36 @@ namespace KeePassPasswordChanger.Templates
 
        public string Name = "";
 
+        [XmlIgnore]
         public List<KeyValuePairEx<string, object>> AvailableResources;
 
         public List<TemplateElement> TemplateElements = new List<TemplateElement>();
 
        public PasswordCreationPolicy PasswordCreationPolicy = new PasswordCreationPolicy();
 
+        [XmlIgnore]
         private System.Timers.Timer _timer;
 
+        [XmlIgnore]
         private CefControl _cefControl;
 
-       public bool Completed;
+        public bool Completed;
 
-       public bool Successful;
+        public bool Successful;
 
-       public string UsedEntryName;
+        [XmlIgnore]
+        public string UsedEntryName;
 
-       public string PwUuid;
-       public byte[] PwUidBytes;
+        [XmlIgnore]
+        public string PwUuid;
+        [XmlIgnore]
+        public byte[] PwUidBytes;
 
-       public string LastTemplateElement = "";
+        [XmlIgnore]
+        public string LastTemplateElement = "";
 
-       public string LastTemplateElementFailureReason = "";
+        [XmlIgnore]
+        public string LastTemplateElementFailureReason = "";
 
        public bool SetNewPasswordWhenSuccess = true;
 
@@ -200,46 +210,58 @@ namespace KeePassPasswordChanger.Templates
                    {
                        TemplateManagement.TemplatesCompleted.Add(UTID,
                            TemplateManagement.TemplatesInTransit[UTID]);
-                       if (Successful)
+                       Template template = TemplateManagement.TemplatesInTransit[UTID];
+                       ProtectedString oldPassword = null, newPassword = null;
+                       foreach (var templateAvailableResourceKeyValuePair in template.AvailableResources)
                        {
-                           Template template = TemplateManagement.TemplatesInTransit[UTID];
-                           ProtectedString oldPassword = null, newPassword = null;
-                           foreach (var templateAvailableResourceKeyValuePair in template.AvailableResources)
+                           if (
+                               BaseObject.ExtractSinglePlaceholderToString(templateAvailableResourceKeyValuePair.Key) ==
+                               "" && (templateAvailableResourceKeyValuePair.Value).GetType().Name == "Text")
                            {
-                               if (
-                                   BaseObject.ExtractSinglePlaceholderToString(templateAvailableResourceKeyValuePair.Key) ==
-                                   "" && (templateAvailableResourceKeyValuePair.Value).GetType().Name == "Text")
-                               {
-                                   newPassword = ((Text) templateAvailableResourceKeyValuePair.Value).Value;
-                               }
-                               if (
-                                   BaseObject.ExtractSinglePlaceholderToString(templateAvailableResourceKeyValuePair.Key) ==
-                                   PwDefs.PasswordField &&
-                                   (templateAvailableResourceKeyValuePair.Value).GetType().Name == "Text")
-                               {
-                                   oldPassword = ((Text) templateAvailableResourceKeyValuePair.Value).Value;
-                               }
+                               newPassword =  ((Text) templateAvailableResourceKeyValuePair.Value).Value;
                            }
-                           if (template.SetNewPasswordWhenSuccess)
+                           if (
+                               BaseObject.ExtractSinglePlaceholderToString(templateAvailableResourceKeyValuePair.Key) ==
+                               PwDefs.PasswordField &&
+                               (templateAvailableResourceKeyValuePair.Value).GetType().Name == "Text")
                            {
-                               PwEntry entry =
-                                   KeePassPasswordChangerExt._mHost.MainWindow.ActiveDatabase.RootGroup.FindEntry(
-                                       new PwUuid(template.PwUidBytes),
-                                       true);
-                               PwEntry newone = new PwEntry(true, true);
+                               oldPassword = ((Text) templateAvailableResourceKeyValuePair.Value).Value;
+                           }
+                       }
+                       if (template.SetNewPasswordWhenSuccess)
+                       {
+
+                           PwEntry entry =
+                               KeePassPasswordChangerExt._mHost.MainWindow.ActiveDatabase.RootGroup.FindEntry(
+                                   new PwUuid(template.PwUidBytes),
+                                   true);
+                           PwEntry newone = new PwEntry(true, true);
+                           if (Successful)
+                           {
                                newone.Strings.Set(PwDefs.PasswordField,
                                    new ProtectedString(true, oldPassword.ReadString()));
                                newone.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "Old Password"));
-                               entry.History.Add(newone);
+                                entry.History.Add(newone);
+                                if (newPassword != null)
+                                    entry.Strings.Set(PwDefs.PasswordField, newPassword);
+                            }
+                           else
+                           {
                                if (newPassword != null)
-                                   entry.Strings.Set(PwDefs.PasswordField, newPassword);
-                               KeePassPasswordChangerExt._mHost.MainWindow.BeginInvoke((MethodInvoker) delegate()
                                {
-                                   entry.LastModificationTime = TimeUtil.ToUtc(DateTime.Now, false);
-                                   KeePassPasswordChangerExt.RefreshUiEntry(entry);
-                               });
-                               KeePassPasswordChangerExt.SaveCurrentDb();
-                           }
+                                   newone.Strings.Set(PwDefs.PasswordField,
+                                       new ProtectedString(true, newPassword.ReadString()));
+                                   newone.Strings.Set(PwDefs.TitleField, new ProtectedString(true, "Not applied new password"));
+                                   entry.History.Add(newone);
+                               }
+                            }
+                           
+                           KeePassPasswordChangerExt._mHost.MainWindow.BeginInvoke((MethodInvoker) delegate()
+                           {
+                               entry.LastModificationTime = TimeUtil.ToUtc(DateTime.Now, false);
+                               KeePassPasswordChangerExt.RefreshUiEntry(entry);
+                           });
+                           //KeePassPasswordChangerExt.SaveCurrentDb();
                        }
                        TemplateManagement.TemplatesInTransit.Remove(UTID);
                    }
@@ -689,7 +711,10 @@ namespace KeePassPasswordChanger.Templates
                     new Exception("The overloaded list is not valid"));
             string ueid = operandsList[1], name = operandsList[2];
             if (ueid == "")
+            {
                 ueid = currentElement.UEID;
+                operand = operand.Replace(BaseObject.ConvertStringToPlaceholderString(""), BaseObject.ConvertStringToPlaceholderString(ueid));
+            }
 
             foreach (var ueidToRessource in AvailableResources)
             {

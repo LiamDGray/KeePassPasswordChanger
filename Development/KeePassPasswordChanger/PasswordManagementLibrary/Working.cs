@@ -44,7 +44,7 @@ namespace KeePassPasswordChanger
         private void _dottedTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             _dottedTimer.Stop();
-            string text = "Changing your passwords, please wait ";
+            string text = "Changing your passwords, please wait and be patient. DO NOT CLOSE OR LOCK YOUR DATABASE! ";
             for (int i = 0; i <= _dotcounter; i++)
                 text += ".";
             _dotcounter++;
@@ -173,7 +173,7 @@ namespace KeePassPasswordChanger
                             if (templatesReady.Count == 0 &&
                                 templatesInTransit.Count == 0)
                             {
-                                ControlBox = true;
+                                KeePassPasswordChangerExt.SaveCurrentDb();
                                 _dottedTimer.Stop();
                                 _listUpdates.Stop();
                                 this.BeginInvoke((MethodInvoker) delegate()
@@ -181,8 +181,8 @@ namespace KeePassPasswordChanger
                                     labelDescription.Text = "Finished with changing";
                                 });
                                 TemplateManagement.StopTemplateManagement();
-                                //KeePassPasswordChangerExt.SaveCurrentDb();
-
+                                ControlBox = true;
+                                TopMost = true;
                                 FinishPasswordChangeProcess();
                             }
                         });
@@ -552,6 +552,7 @@ namespace KeePassPasswordChanger
                 _listUpdates.Start();
                 _dottedTimer.Start();
                 TemplateManagement.StartTemplateManagement();
+                TopMost = false;
                 listBoxRemainingTemplates.Enabled = false;
                 listBoxRemovedTemplates.Enabled = false;
             }

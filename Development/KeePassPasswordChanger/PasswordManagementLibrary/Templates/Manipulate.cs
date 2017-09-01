@@ -80,7 +80,7 @@ namespace KeePassPasswordChanger.Templates
             listBoxTemplateElements.Items.Clear();
             foreach (var templateElement in Template.TemplateElements)
             {
-                listBoxTemplateElements.Items.Add(GenerateTemplateElementString(templateElement, false));
+                listBoxTemplateElements.Items.Add(GenerateTemplateElementString(templateElement, true));
             }
         }
 
@@ -168,7 +168,7 @@ namespace KeePassPasswordChanger.Templates
                 for (int i = 0; i < listBoxTemplateElements.Items.Count; i++)
                 {
                     if (listBoxTemplateElements.GetSelected(i) &&
-                        listBoxTemplateElements.Items[i].ToString() == GenerateTemplateElementString(cTemplateElement, false))
+                        listBoxTemplateElements.Items[i].ToString() == GenerateTemplateElementString(cTemplateElement, true))
                     {
                         templateElement = cTemplateElement;
                     }
