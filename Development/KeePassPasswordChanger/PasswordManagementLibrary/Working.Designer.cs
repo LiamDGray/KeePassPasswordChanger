@@ -43,7 +43,6 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.listBoxActiveTemplates = new System.Windows.Forms.ListBox();
             this.groupBoxCompleted = new System.Windows.Forms.GroupBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.listBoxTemplatesCompleted = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBoxFailedTemplates = new System.Windows.Forms.ListBox();
@@ -183,24 +182,22 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(710, 20);
+            this.textBox3.Size = new System.Drawing.Size(710, 46);
             this.textBox3.TabIndex = 16;
-            this.textBox3.Text = "Info: You can click on any line in this three password change boxes to copy the w" +
-    "hole output of the template elements to your clipboard.";
+            this.textBox3.Text = resources.GetString("textBox3.Text");
             // 
             // listBoxActiveTemplates
             // 
             this.listBoxActiveTemplates.FormattingEnabled = true;
-            this.listBoxActiveTemplates.Location = new System.Drawing.Point(6, 45);
+            this.listBoxActiveTemplates.Location = new System.Drawing.Point(6, 71);
             this.listBoxActiveTemplates.Name = "listBoxActiveTemplates";
             this.listBoxActiveTemplates.ScrollAlwaysVisible = true;
-            this.listBoxActiveTemplates.Size = new System.Drawing.Size(714, 160);
+            this.listBoxActiveTemplates.Size = new System.Drawing.Size(714, 134);
             this.listBoxActiveTemplates.TabIndex = 3;
             this.listBoxActiveTemplates.SelectedIndexChanged += new System.EventHandler(this.listBoxActiveTemplates_SelectedIndexChanged);
             // 
             // groupBoxCompleted
             // 
-            this.groupBoxCompleted.Controls.Add(this.textBox4);
             this.groupBoxCompleted.Controls.Add(this.listBoxTemplatesCompleted);
             this.groupBoxCompleted.Location = new System.Drawing.Point(735, 275);
             this.groupBoxCompleted.Name = "groupBoxCompleted";
@@ -209,26 +206,13 @@
             this.groupBoxCompleted.TabStop = false;
             this.groupBoxCompleted.Text = "Completed password changes";
             // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Location = new System.Drawing.Point(6, 19);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(344, 30);
-            this.textBox4.TabIndex = 16;
-            this.textBox4.Text = "Info: Once a password change is complete, the whole database will automatically g" +
-    "et saved.";
-            // 
             // listBoxTemplatesCompleted
             // 
             this.listBoxTemplatesCompleted.FormattingEnabled = true;
-            this.listBoxTemplatesCompleted.Location = new System.Drawing.Point(6, 58);
+            this.listBoxTemplatesCompleted.Location = new System.Drawing.Point(6, 19);
             this.listBoxTemplatesCompleted.Name = "listBoxTemplatesCompleted";
             this.listBoxTemplatesCompleted.ScrollAlwaysVisible = true;
-            this.listBoxTemplatesCompleted.Size = new System.Drawing.Size(344, 251);
+            this.listBoxTemplatesCompleted.Size = new System.Drawing.Size(344, 290);
             this.listBoxTemplatesCompleted.TabIndex = 3;
             this.listBoxTemplatesCompleted.SelectedIndexChanged += new System.EventHandler(this.listBoxTemplatesCompleted_SelectedIndexChanged);
             // 
@@ -277,7 +261,6 @@
             this.groupBoxActiveTemplates.ResumeLayout(false);
             this.groupBoxActiveTemplates.PerformLayout();
             this.groupBoxCompleted.ResumeLayout(false);
-            this.groupBoxCompleted.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -303,6 +286,5 @@
         private System.Windows.Forms.Button buttonEnqueueEntry;
         private System.Windows.Forms.Button buttonRemovedEntry;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
     }
 }

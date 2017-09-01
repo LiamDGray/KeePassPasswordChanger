@@ -44,7 +44,7 @@ namespace KeePassPasswordChanger
         private void _dottedTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             _dottedTimer.Stop();
-            string text = "Changing your passwords, please wait ";
+            string text = "Changing your passwords, please wait and be patient. DO NOT CLOSE OR LOCK YOUR DATABASE! ";
             for (int i = 0; i <= _dotcounter; i++)
                 text += ".";
             _dotcounter++;
