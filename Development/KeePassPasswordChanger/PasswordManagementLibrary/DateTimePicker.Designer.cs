@@ -50,9 +50,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(289, 13);
+            this.label1.Size = new System.Drawing.Size(294, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Only change passwords, which haven\'t been modified since";
+            this.label1.Text = "Only change passwords, which haven\'t been updated before";
             // 
             // buttonOk
             // 

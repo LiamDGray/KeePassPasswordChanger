@@ -120,4 +120,7 @@
   <data name="textBox1.Text" xml:space="preserve">
     <value>Info: Double click on a remaining password change entry and it will get removed from the Queue. Double click it in the removed list to enqueue it again.  Once started, the process of changing must run through!</value>
   </data>
+  <data name="textBox3.Text" xml:space="preserve">
+    <value>Info: You can click on any line in this three password change boxes to copy the whole output of the template elements to your clipboard. The new passwords of completed password changes will automatically get applied and the old password will be available in the history. If a change fails, the old password will not be changed, however, for backup reasons, your new password will be added to the history of the entry.</value>
+  </data>
 </root>

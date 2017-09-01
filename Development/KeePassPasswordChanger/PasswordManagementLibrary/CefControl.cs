@@ -238,20 +238,6 @@ namespace KeePassPasswordChanger
                                         quit.Completed = true;
                                         BrowserCommandsCompleted.Add(quit.UCID, quit);
                                         break;
-                                    case "CefBrowserControl.BrowserCommands.GetInputFromUser":
-                                        GetInputFromUser input = (GetInputFromUser) browserCommandKeyValuePair.Value;
-                                        InputForm form = new InputForm((GetInputFromUser)browserCommandKeyValuePair.Value);
-                                        form.PrepareForm(input);
-                                        while (true)
-                                        {
-                                            if (input.Completed || input.TimedOut)
-                                                break;
-                                            Thread.Sleep(100);
-                                        }
-                                        form.Dispose();
-                                        form = null;
-                                        BrowserCommandsCompleted.Add(input.UCID, input);
-                                        break;
                                     default:
                                         BrowserCommand cmd = (BrowserCommand)browserCommandKeyValuePair.Value;
                                         PendingMessagesList.Add(new KeyValuePairEx<string, string>(cmd.UID, CefEncoding.Encode(cmd.UCID, cmd)));

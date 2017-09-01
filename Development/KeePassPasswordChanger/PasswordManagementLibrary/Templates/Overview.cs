@@ -281,7 +281,7 @@ namespace KeePassPasswordChanger.Templates
                                             pwGroup.Entries.Remove(oldEntry);
                                             KeePassPasswordChangerExt.RefreshUiGroup(pwGroup);
                                         }
-                                        KeePassPasswordChangerExt.SaveCurrentDb();
+                                        //KeePassPasswordChangerExt.SaveCurrentDb();
                                         count++;
                                     }
                                     catch (Exception ex)
@@ -585,8 +585,32 @@ namespace KeePassPasswordChanger.Templates
             pwgroup.Entries.Remove(singlePwEntry);
 
             KeePassPasswordChangerExt.RefreshUiGroup(pwgroup);
-            KeePassPasswordChangerExt.SaveCurrentDb();
+            //KeePassPasswordChangerExt.SaveCurrentDb();
             RefreshUI();
+        }
+
+        private void CleanTemplateElement(TemplateElement templateElement)
+        {
+            BaseObject baseObject = ((BaseObject) templateElement.BrowserActionOrCommand);
+            baseObject.InputParameterAvailable = null;
+            if (templateElement.AppendedTemplateElement != null)
+                CleanTemplateElement(templateElement.AppendedTemplateElement);
+            foreach (var conditionsToTemplateElement in templateElement.ConditionBasedAppendedTemplateElements)
+            {
+                if (conditionsToTemplateElement.Value != null)
+                    CleanTemplateElement(conditionsToTemplateElement.Value);
+            }
+        }
+
+        private Template CleanTemplate(Template template)
+        {
+            template.AvailableResources = null;
+            template.InputParameterAvailable = null;
+            foreach (var templateTemplateElement in template.TemplateElements)
+            {
+                CleanTemplateElement(templateTemplateElement);
+            }
+            return template;
         }
 
         private bool AddTemplate(Template template)
@@ -621,7 +645,8 @@ namespace KeePassPasswordChanger.Templates
             
             if (foundAnotherEntry)
                 return false;
-            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(template,
+
+            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(CleanTemplate(template),
                 template.GetType());
             string encodedEntry = EncodingEx.Base64.Encoder.EncodeString(Encoding.UTF8, serializedEntry);
             PwEntry entry = new PwEntry(true, true);
@@ -630,7 +655,7 @@ namespace KeePassPasswordChanger.Templates
             entry.Strings.Set(PwDefs.UrlField, new ProtectedString(true, template.BoundUrl.Value.Value));
             _editPwGroup.AddEntry(entry, true);
             KeePassPasswordChangerExt.RefreshUiEntry(entry);
-            KeePassPasswordChangerExt.SaveCurrentDb();
+            //KeePassPasswordChangerExt.SaveCurrentDb();
             RefreshUI();
             return true;
         }
@@ -675,14 +700,14 @@ namespace KeePassPasswordChanger.Templates
                 MessageBox.Show("There are too many templates that match on the bound URL or share the same UTID");
                 return false;
             }
-            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(template,
+            string serializedEntry = SerializationDotNet2.Xml.Serializer.SerializeObjectToString(CleanTemplate(template),
                 template.GetType());
             string encodedEntry = EncodingEx.Base64.Encoder.EncodeString(Encoding.UTF8, serializedEntry);
             singlePwEntry.Strings.Set(PwDefs.NotesField, new ProtectedString(true, encodedEntry));
             singlePwEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(true, template.Name + " Version " + template.TemplateVersion + " UTID: " + template.UTID));
             singlePwEntry.Strings.Set(PwDefs.UrlField, new ProtectedString(true, template.BoundUrl.Value.Value));
             KeePassPasswordChangerExt.RefreshUiEntry(singlePwEntry);
-            KeePassPasswordChangerExt.SaveCurrentDb();
+            //KeePassPasswordChangerExt.SaveCurrentDb();
             RefreshUI();
             return true;
         }
@@ -700,6 +725,11 @@ namespace KeePassPasswordChanger.Templates
         private void buttonVisitTemplatesPage_Click(object sender, EventArgs e)
         {
             Process.Start(Options.PublicTemplatesUrl);
+        }
+
+        private void Overview_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            KeePassPasswordChangerExt.SaveCurrentDb();
         }
     }
 }
