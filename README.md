@@ -1,7 +1,7 @@
 # keepass-password-changer
 A plugin for KeePass v2 to change supported password entries automatically
 
-**Notice** - Dev docs are unavailable at the moment. Template instructions will follow! When password changes fail, please click on the elements and be sure the password hasn't been changed!
+**Notice** - Dev docs are unavailable at the moment. Template instructions will follow! 
 
 # Start - HowTo use
 Select branch master, go to [Build/KeePass-Password-Changer](https://github.com/phi-el/KeePassPasswordChanger/tree/master/Build/KeePass-Password-Changer) and download the latest zip version of the plugin. The current version and the sha512 hash value of the zip file can be located in the README.md of the containing directory.   
@@ -9,6 +9,13 @@ Unzip the content of the zip folder into the KeePass v2 Directory. It's recommen
 Release-Zip naming convention: KeePassPasswordChanger vX.X.X.X.zip
 
 **Important:** Let CefBrowser communicate through your firewall BEFORE you start a browser action. The best solution therefor is to execute it after you extracted the plugin. If the **DuckDuckgo.com** site shows up, you are ready to go :)
+
+**Notice(s)**
+ - Backup your DB
+ - Logout from active web-sessions (when they are currently opened in your browser)
+ - when a lot of changes fail, this may be due to low internet bandwidth, low cpu power or other cpu-consuming applications (chrome and netflix are evil, believe me ^^)
+ - The bigger your password DB is, the longer will it take so obay the following line:
+ - **DO NOT CLOSE THE APPLICATION WHEN PW CHANGES ARE RUNNING; YOU WILL CORRUPT YOUR DATABASE!**
 
 
 # Rebuild it on your own :)
