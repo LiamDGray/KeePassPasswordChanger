@@ -126,8 +126,9 @@ namespace KeePassPasswordChanger
                                         if (cefDecodeResult.DecodedObject is BrowserAction)
                                         {
                                             BrowserAction browserAction = (BrowserAction) cefDecodeResult.DecodedObject;
-                                            browserAction.ExecuteEventHandler = true;
-                                            browserAction.SetFinished(true);
+                                            BaseObject baseObject = ((BaseObject) browserAction.ActionObject);
+                                            baseObject.ExecuteEventHandler = true;
+                                            baseObject.SetFinished(true);
 
                                             BrowserActionsInTransit.Remove(cefDecodeResult.UCID);
                                             BrowserActionsCompleted.Add(cefDecodeResult.UCID, cefDecodeResult.DecodedObject);

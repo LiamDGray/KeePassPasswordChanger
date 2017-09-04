@@ -23,7 +23,7 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(BrowserAction))]
     [XmlInclude(typeof(BrowserCommand))]
     [Serializable]
-    public class Template : InputParameters,  ICloneable
+    public class Template : ICloneable
    {
         public static bool AutomaticallyCloseWindowWhenOutOfCommands = true;
        public const int TemplateVersionCurrentAvailable = 1;
@@ -87,29 +87,29 @@ namespace KeePassPasswordChanger.Templates
             GenerateNewUtid();
             TemplateVersion = 1;
 
-            if (!HaveRequirementsBeenSet)
-                HaveRequirementsBeenSet = true;
-            else
-                return;
+            //if (!HaveRequirementsBeenSet)
+            //    HaveRequirementsBeenSet = true;
+            //else
+            //    return;
 
-            InputParameterAvailable = new List<KeyValuePairEx<string, object>>()
-            {
-                new KeyValuePairEx<string, object>("UTID", UTID),
-                new KeyValuePairEx<string, object>("TemplateVersion", TemplateVersion),
-                new KeyValuePairEx<string, object>("BoundUrl", BoundUrl),
-                new KeyValuePairEx<string, object>("Name", Name),
-                new KeyValuePairEx<string, object>("PasswordCreationPolicy", PasswordCreationPolicy),
-                new KeyValuePairEx<string, object>("SetNewPasswordWhenSuccess", SetNewPasswordWhenSuccess),
-            };
-            InputParameterRequired = new List<string>()
-            {
-                "UTID",
-                "TemplateVersion",
-                "BoundUrl",
-                "Name",
-                "PasswordCreationPolicy",
-                "SetNewPasswordWhenSuccess"
-            };
+            //InputParameterAvailable = new List<KeyValuePairEx<string, object>>()
+            //{
+            //    new KeyValuePairEx<string, object>("UTID", UTID),
+            //    new KeyValuePairEx<string, object>("TemplateVersion", TemplateVersion),
+            //    new KeyValuePairEx<string, object>("BoundUrl", BoundUrl),
+            //    new KeyValuePairEx<string, object>("Name", Name),
+            //    new KeyValuePairEx<string, object>("PasswordCreationPolicy", PasswordCreationPolicy),
+            //    new KeyValuePairEx<string, object>("SetNewPasswordWhenSuccess", SetNewPasswordWhenSuccess),
+            //};
+            //InputParameterRequired = new List<string>()
+            //{
+            //    "UTID",
+            //    "TemplateVersion",
+            //    "BoundUrl",
+            //    "Name",
+            //    "PasswordCreationPolicy",
+            //    "SetNewPasswordWhenSuccess"
+            //};
         }
 
         private void GenerateNewUtid()
@@ -285,16 +285,18 @@ namespace KeePassPasswordChanger.Templates
        public bool RunTemplate(TemplateElement element, CefControl cefControl)
        {
            LastTemplateElement = element.Name + " @ TemplateElement-ID " + element.UEID;
-           BaseObject baseObject = (BaseObject) element.BrowserActionOrCommand;
-           if (baseObject is BrowserCommand)
+           BaseObject baseObject = null;
+           if (element.BrowserActionOrCommand is BrowserCommand)
            {
+               baseObject = ((BaseObject) element.BrowserActionOrCommand);
                if (baseObject.TimeoutInSec != null)
-                   baseObject.Timeout = new TimeSpan(0, 0, baseObject.TimeoutInSec.Value);
+                    baseObject.Timeout = new TimeSpan(0, 0, baseObject.TimeoutInSec.Value);
            }
-           else if (baseObject is BrowserAction)
+           else if (element.BrowserActionOrCommand is BrowserAction)
            {
-                if (((BaseObject)((BrowserAction)baseObject).ActionObject).TimeoutInSec != null)
-                    baseObject.Timeout = new TimeSpan(0, 0, ((BaseObject)((BrowserAction)baseObject).ActionObject).TimeoutInSec.Value);
+               baseObject = ((BaseObject) ((BrowserAction) element.BrowserActionOrCommand).ActionObject);
+                if (baseObject.TimeoutInSec != null)
+                    baseObject.Timeout = new TimeSpan(0, 0, baseObject.TimeoutInSec.Value);
             }
            //rework anyhow?
            //@ requirement calculation: is required a pwdef placeholder?
@@ -647,10 +649,10 @@ namespace KeePassPasswordChanger.Templates
                         return false;
                     }
                 }
-                if (!((BrowserAction) CefControl.BrowserActionsCompleted[action.UCID]).Successful)
+                if (!((BaseObject)((BrowserAction) CefControl.BrowserActionsCompleted[action.UCID]).ActionObject).Successful)
                 {
                     string text = "";
-                    foreach (var keyValuePair in action.ReturnedOutput)
+                    foreach (var keyValuePair in ((BaseObject)action.ActionObject).ReturnedOutput)
                     {
                         text += "Entry: " + keyValuePair.Key + " --> " + keyValuePair.Value + ".";
                     }

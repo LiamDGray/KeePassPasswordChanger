@@ -38,14 +38,16 @@ namespace KeePassPasswordChanger.Templates
                     new Exception("TemplateElement should be initialized!"));
             }
             Debug.Assert(TemplateElement != null, "TemplateElement != null");
-            BaseObject baseObject = TemplateElement.BrowserActionOrCommand is BrowserCommand ?
-                 (BaseObject)TemplateElement.BrowserActionOrCommand :
-                 (BaseObject)((BrowserAction)TemplateElement.BrowserActionOrCommand).ActionObject;
+            BaseObject baseObject = TemplateElement.BrowserActionOrCommand is BrowserCommand
+                ? (BaseObject) TemplateElement.BrowserActionOrCommand
+                : (BaseObject) ((BrowserAction) TemplateElement.BrowserActionOrCommand).ActionObject;
             return baseObject;
         }
 
         private List<KeyValuePairEx<string, object>> GetParameters()
         {
+
+
             return GetBaseObject().InputParameterAvailable;
         }
 
@@ -61,22 +63,25 @@ namespace KeePassPasswordChanger.Templates
             Template = template;
 
             textBoxName.Text = TemplateElement.Name;
-            textBoxName.TextChanged+= TextBoxNameOnTextChanged;
+            textBoxName.TextChanged += TextBoxNameOnTextChanged;
 
             textBoxUEID.Text = TemplateElement.UEID;
             textBoxUEID.TextChanged += TextBoxUeidOnTextChanged;
 
-            if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserCommand)
+            templateElement.ReadAvailableInputParameters();
+
+
+            if (TemplateElement.BrowserActionOrCommand is BrowserCommand)
             {
                 if (((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec != null)
                     textBoxTimeOut.Text = ((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec.Value.ToString();
                 else
                     textBoxTimeOut.Text = "";
             }
-            else if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserAction)
+            else if (TemplateElement.BrowserActionOrCommand is BrowserAction)
             {
-                if (((BaseObject)((BrowserAction)((BaseObject)TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec != null)
-                    textBoxTimeOut.Text = ((BaseObject)((BrowserAction)((BaseObject)TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec.Value.ToString();
+                if (((BaseObject) ((BrowserAction) TemplateElement.BrowserActionOrCommand).ActionObject).TimeoutInSec != null)
+                    textBoxTimeOut.Text = ((BaseObject) ((BrowserAction) TemplateElement.BrowserActionOrCommand).ActionObject).TimeoutInSec.Value.ToString();
                 else
                     textBoxTimeOut.Text = "";
             }
@@ -154,11 +159,11 @@ namespace KeePassPasswordChanger.Templates
                 };
             buttonCompleted.Click += delegate(object sender, EventArgs args)
             {
-                    Clipboard.SetText(BaseObject.ConvertStringToPlaceholderString("completed"));
+                Clipboard.SetText(BaseObject.ConvertStringToPlaceholderString("completed"));
             };
             buttonSuccessfull.Click += delegate(object sender, EventArgs args)
             {
-                    Clipboard.SetText(BaseObject.ConvertStringToPlaceholderString("successfull"));
+                Clipboard.SetText(BaseObject.ConvertStringToPlaceholderString("successfull"));
 
             };
 
@@ -168,7 +173,7 @@ namespace KeePassPasswordChanger.Templates
             }
             listBoxPwDefs.SelectedValueChanged += delegate(object sender, EventArgs args)
             {
-                ListBox listBox = (ListBox)sender;
+                ListBox listBox = (ListBox) sender;
                 foreach (var standardField in PwDefs.GetStandardFields())
                 {
                     if (listBox.Text == standardField)
@@ -184,7 +189,7 @@ namespace KeePassPasswordChanger.Templates
             }
             listBoxOutputTemplateElements.SelectedValueChanged += delegate(object sender, EventArgs args)
             {
-                ListBox listBox = (ListBox)sender;
+                ListBox listBox = (ListBox) sender;
                 foreach (var outputKey in GetOutputKeyList())
                 {
                     if (listBox.Text == outputKey)
@@ -214,7 +219,7 @@ namespace KeePassPasswordChanger.Templates
             foreach (Control control in groupBoxConditionBasedTemplateelements.Controls)
             {
                 if (control is TabControl)
-                    tabControlConditionBasedTemplateElements = (TabControl)control;
+                    tabControlConditionBasedTemplateElements = (TabControl) control;
             }
             if (tabControlConditionBasedTemplateElements == null)
                 ExceptionHandling.Handling.GetException("Unexpected",
@@ -287,8 +292,8 @@ namespace KeePassPasswordChanger.Templates
 
             Label labelAppendedTemplateElementUeid = new Label();
             labelAppendedTemplateElementUeid.Visible = false;
-            labelAppendedTemplateElementUeid.Text =  succesCondition ? (templateElement.AppendedTemplateElement == null ? "" : templateElement.AppendedTemplateElement.UEID) : (templateElement == null ? "" : templateElement.UEID);
-            
+            labelAppendedTemplateElementUeid.Text = succesCondition ? (templateElement.AppendedTemplateElement == null ? "" : templateElement.AppendedTemplateElement.UEID) : (templateElement == null ? "" : templateElement.UEID);
+
             tabPageConditions.Controls.Add(labelAppendedTemplateElementUeid);
 
             if (succesCondition)
@@ -346,7 +351,7 @@ namespace KeePassPasswordChanger.Templates
 
                 buttonRemoveConditionBasedTemplateElement.Click += ButtonRemoveConditionBasedTemplateElement_Click;
                 tabPageConditions.Controls.Add(buttonRemoveConditionBasedTemplateElement);
-                tabControlTemplateElementConditions.SelectedIndex = tabControlTemplateElementConditions.TabCount-1;
+                tabControlTemplateElementConditions.SelectedIndex = tabControlTemplateElementConditions.TabCount - 1;
             }
         }
 
@@ -361,11 +366,11 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (control is Label && control.Name.Contains("labelAppendedTemplateelement"))
                 {
-                    labelAppendedTemplateElement = (Label)control;
+                    labelAppendedTemplateElement = (Label) control;
                 }
                 else if (control is Label && control.Visible == false)
                 {
-                    labelAppendedTemplateElementUeid = (Label)control;
+                    labelAppendedTemplateElementUeid = (Label) control;
                 }
             }
             if (labelAppendedTemplateElement == null)
@@ -393,7 +398,7 @@ namespace KeePassPasswordChanger.Templates
                 }
             }
             tabControlConditionTemplateElements.TabPages.Remove(
-                            tabPageConditionBasedTemplateElementCondition);
+                tabPageConditionBasedTemplateElementCondition);
             tabControlConditionTemplateElements.SelectedIndex =
                 tabControlConditionTemplateElements.TabPages.Count - 1;
             tabControlConditionTemplateElements.TabPages.Remove(tabPageConditionBasedTemplateElementCondition);
@@ -402,19 +407,19 @@ namespace KeePassPasswordChanger.Templates
 
         private void ButtonRemoveAppendedTemplateElement_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            TabPage tabPageTemplateElementsCondition = (TabPage)button.Parent;
+            Button button = (Button) sender;
+            TabPage tabPageTemplateElementsCondition = (TabPage) button.Parent;
             Label labelAppendedTemplateElement = null, labelAppendedTemplateElementUeid = null;
             bool foundRemoveConditionButton = false;
             foreach (Control control in tabPageTemplateElementsCondition.Controls)
             {
                 if (control is Label && control.Name.Contains("labelAppendedTemplateelement"))
                 {
-                    labelAppendedTemplateElement = (Label)control;
+                    labelAppendedTemplateElement = (Label) control;
                 }
                 else if (control is Label && control.Visible == false)
                 {
-                    labelAppendedTemplateElementUeid = (Label)control;
+                    labelAppendedTemplateElementUeid = (Label) control;
                 }
             }
             if (labelAppendedTemplateElement == null)
@@ -438,9 +443,9 @@ namespace KeePassPasswordChanger.Templates
             if (!foundRemoveConditionButton)
             {
                 //if (TemplateElement.AppendedTemplateElement.UEID == labelAppendedTemplateElementUeid.Text)
-                    TemplateElement.AppendedTemplateElement = null;
+                TemplateElement.AppendedTemplateElement = null;
                 labelAppendedTemplateElement.Text =
-                        GetAppendedTemplateElementStringForLabel(TemplateElement.AppendedTemplateElement);
+                    GetAppendedTemplateElementStringForLabel(TemplateElement.AppendedTemplateElement);
                 labelAppendedTemplateElementUeid.Text = "";
             }
             else
@@ -459,14 +464,14 @@ namespace KeePassPasswordChanger.Templates
                             TemplateElement.ConditionBasedAppendedTemplateElements.Remove(conditionsToTemplateElement);
                             TemplateElement.ConditionBasedAppendedTemplateElements.Add(newEntry);
                             labelAppendedTemplateElement.Text =
-                            GetAppendedTemplateElementStringForLabel(newTemplateElement.TemplateElement);
+                                GetAppendedTemplateElementStringForLabel(newTemplateElement.TemplateElement);
                             labelAppendedTemplateElementUeid.Text = newTemplateElement.TemplateElement.UEID;
                         }
                         break;
                     }
                 }
             }
-            
+
         }
 
         private void ButtonAddOrEditAppendedTemplateElementOnClick(object sender, EventArgs eventArgs)
@@ -479,11 +484,11 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (control is Label && control.Name.Contains("labelAppendedTemplateelement"))
                 {
-                    labelAppendedTemplateElement = (Label)control;
+                    labelAppendedTemplateElement = (Label) control;
                 }
                 else if (control is Label && control.Visible == false)
                 {
-                    labelAppendedTemplateElementUeid = (Label)control;
+                    labelAppendedTemplateElementUeid = (Label) control;
                 }
             }
             if (labelAppendedTemplateElement == null)
@@ -549,7 +554,7 @@ namespace KeePassPasswordChanger.Templates
                         if (conditionsToTemplateElement.Value.UEID == labelAppendedTemplateElementUeid.Text)
                         {
                             ManipulateTemplateElement manipulateTemplateElement =
-                        new ManipulateTemplateElement(conditionsToTemplateElement.Value, Template);
+                                new ManipulateTemplateElement(conditionsToTemplateElement.Value, Template);
                             manipulateTemplateElement.ShowDialog();
 
                             labelAppendedTemplateElement.Text =
@@ -697,16 +702,16 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (parameterToInput.Value is TabPage && parameterToInput.Value == tabPage)
                 {
-                    Condition condition = (Condition)parameterToInput.Key;
+                    Condition condition = (Condition) parameterToInput.Key;
                     foreach (Control control in tabPage.Controls)
                     {
                         if (control is TextBox && control.Name.Contains("textBoxOperand1"))
-                            condition.FirstOperand = ((TextBox)control).Text;
+                            condition.FirstOperand = ((TextBox) control).Text;
                         else if (control is TextBox && control.Name.Contains("textBoxOperand2"))
-                            condition.SecondOperand = ((TextBox)control).Text;
+                            condition.SecondOperand = ((TextBox) control).Text;
                         else if (control is ComboBox && control.Name.Contains("comboBoxConditionOperator"))
                         {
-                            ComboBox comboBox = (ComboBox)control;
+                            ComboBox comboBox = (ComboBox) control;
                             foreach (var value in Condition.AllowedOperators)
                             {
                                 if (value == comboBox.Text)
@@ -748,11 +753,11 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (control is Label && control.Name.Contains("labelAppendedTemplateelement"))
                 {
-                    labelAppendedTemplateElement = (Label)control;
+                    labelAppendedTemplateElement = (Label) control;
                 }
                 else if (control is Label && control.Visible == false)
                 {
-                    labelAppendedTemplateElementUeid = (Label)control;
+                    labelAppendedTemplateElementUeid = (Label) control;
                 }
             }
             if (labelAppendedTemplateElement == null)
@@ -783,7 +788,7 @@ namespace KeePassPasswordChanger.Templates
             {
                 foreach (var conditionsToTemplateElement in TemplateElement.ConditionBasedAppendedTemplateElements)
                 {
-                    if(conditionsToTemplateElement.Value.UEID == labelAppendedTemplateElementUeid.Text)
+                    if (conditionsToTemplateElement.Value.UEID == labelAppendedTemplateElementUeid.Text)
                         conditionsToTemplateElement.Key.Add(condition);
                 }
             }
@@ -796,7 +801,7 @@ namespace KeePassPasswordChanger.Templates
             TabPage tabPageCondition = (TabPage) button.Parent;
             TabControl tabControlConditions = (TabControl) tabPageCondition.Parent;
             //--
-            TabPage tabPageConditionBasedTemplateElement = (TabPage)tabControlConditions.Parent;
+            TabPage tabPageConditionBasedTemplateElement = (TabPage) tabControlConditions.Parent;
             Label labelAppendedTemplateElement = null, labelAppendedTemplateElementUeid = null, labelConditionUcid = null;
             bool foundRemoveConditionButton = false;
 
@@ -804,21 +809,21 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (control is Label && control.Name.Contains("labelAppendedTemplateelement"))
                 {
-                    labelAppendedTemplateElement = (Label)control;
+                    labelAppendedTemplateElement = (Label) control;
                 }
                 else if (control is Label && control.Visible == false)
                 {
-                    labelAppendedTemplateElementUeid = (Label)control;
+                    labelAppendedTemplateElementUeid = (Label) control;
                 }
             }
             foreach (Control control in tabPageCondition.Controls)
             {
-                 if (control is Label && control.Visible == false && control.Name.Contains("labelConditionUcid"))
+                if (control is Label && control.Visible == false && control.Name.Contains("labelConditionUcid"))
                 {
-                    labelConditionUcid = (Label)control;
+                    labelConditionUcid = (Label) control;
                 }
             }
-           
+
             foreach (Control control in tabPageConditionBasedTemplateElement.Controls)
             {
                 if (control.Name.Contains("buttonRemoveConditionBasedTemplateElement"))
@@ -887,13 +892,13 @@ namespace KeePassPasswordChanger.Templates
             groupBox.Text = name + ": " + type;
             _currentY += groupBox.Size.Height + VerticalSpace;
             Controls.Add(groupBox);
-            Height = _currentY + 19*2;
+            Height = _currentY + 19 * 2;
             return groupBox;
         }
 
         private void GroupBoxCreateBool(string name, object boolValue)
         {
-            GroupBox groupBox = GroupboxCreate(name, "Bool",  47);
+            GroupBox groupBox = GroupboxCreate(name, "Bool", 47);
 
             CheckBox checkbox = new CheckBox();
             checkbox.AutoSize = true;
@@ -951,9 +956,9 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (parameterToInputObject.Value is TextBox)
                 {
-                    if (((TextBox)parameterToInputObject.Value) == textBox)
+                    if (((TextBox) parameterToInputObject.Value) == textBox)
                     {
-                        InsecureText insecureText = (InsecureText)parameterToInputObject.Key;
+                        InsecureText insecureText = (InsecureText) parameterToInputObject.Key;
                         insecureText.Value = textBox.Text;
                         TemplateElement.ReadAvailableInputParameters();
                     }
@@ -973,7 +978,7 @@ namespace KeePassPasswordChanger.Templates
             textBox.KeyPress += TextBoxOnKeyPress;
             textBox.TextChanged += GroupBoxIntegerChanged;
 
-            textBox.Text = ((InsecureInt)integerValue).Value.ToString();
+            textBox.Text = ((InsecureInt) integerValue).Value.ToString();
             groupBox.Controls.Add(textBox);
 
             _parameterToInputList.Add(new KeyValuePair<object, object>(integerValue, textBox));
@@ -981,14 +986,14 @@ namespace KeePassPasswordChanger.Templates
 
         private void GroupBoxIntegerChanged(object sender, EventArgs eventArgs)
         {
-            TextBox textBox = (TextBox)sender;
+            TextBox textBox = (TextBox) sender;
             foreach (var parameterToInputObject in _parameterToInputList)
             {
                 if (parameterToInputObject.Value is TextBox)
                 {
-                    if (((TextBox)parameterToInputObject.Value) == textBox)
+                    if (((TextBox) parameterToInputObject.Value) == textBox)
                     {
-                        InsecureInt insecureText = (InsecureInt)parameterToInputObject.Key;
+                        InsecureInt insecureText = (InsecureInt) parameterToInputObject.Key;
                         if (textBox.Text == "")
                             insecureText.Value = null;
                         else
@@ -1002,7 +1007,7 @@ namespace KeePassPasswordChanger.Templates
         private void GroupBoxCreateStringOrRegex(string name, object stringOrRegexObject)
         {
             GroupBox groupBox = GroupboxCreate(name, "String or Regex", 47);
-            _parameterToInputList.Add(new KeyValuePair<object, object>((StringOrRegex)stringOrRegexObject, groupBox));
+            _parameterToInputList.Add(new KeyValuePair<object, object>((StringOrRegex) stringOrRegexObject, groupBox));
 
 
             CheckBox checkBox = new CheckBox();
@@ -1017,7 +1022,7 @@ namespace KeePassPasswordChanger.Templates
 
             checkBox.Checked = ((StringOrRegex) stringOrRegexObject).IsRegex.Value;
             groupBox.Controls.Add(checkBox);
-           
+
             TextBox textBox = new TextBox();
             textBox.Location = new Point(79, 19);
             textBox.Name = "StringOrRegexTextBox" + _currentTabIndex;
@@ -1031,20 +1036,20 @@ namespace KeePassPasswordChanger.Templates
 
         private void GroupBoxStringOrRegexChanged(object sender, EventArgs eventArgs)
         {
-            GroupBox groupBox = (GroupBox)((Control)sender).Parent;
+            GroupBox groupBox = (GroupBox) ((Control) sender).Parent;
             foreach (var parameterToInputObject in _parameterToInputList)
             {
                 if (parameterToInputObject.Value is GroupBox)
                 {
-                    if (((GroupBox)parameterToInputObject.Value) == groupBox)
+                    if (((GroupBox) parameterToInputObject.Value) == groupBox)
                     {
-                        StringOrRegex stringOrRegex = (StringOrRegex)parameterToInputObject.Key;
+                        StringOrRegex stringOrRegex = (StringOrRegex) parameterToInputObject.Key;
                         foreach (Control control in groupBox.Controls)
                         {
                             if (control is CheckBox && control.Name.Contains("StringOrRegexBool"))
                                 stringOrRegex.IsRegex.Value = ((CheckBox) control).Checked;
-                            else if(control is TextBox && control.Name.Contains("StringOrRegexTextBox"))
-                                stringOrRegex.Value.Value = ((TextBox)control).Text;
+                            else if (control is TextBox && control.Name.Contains("StringOrRegexTextBox"))
+                                stringOrRegex.Value.Value = ((TextBox) control).Text;
                         }
 
                         TemplateElement.ReadAvailableInputParameters();
@@ -1057,14 +1062,14 @@ namespace KeePassPasswordChanger.Templates
         {
             GroupBox groupBox = GroupboxCreate(name, "Selector", 104);
             _parameterToInputList.Add(new KeyValuePair<object, object>(
-                    (Selector)selector, groupBox));
+                (Selector) selector, groupBox));
 
             {
                 //Select ON
                 ComboBox comboBoxSelectOn = new ComboBox();
                 comboBoxSelectOn.FormattingEnabled = true;
                 comboBoxSelectOn.Location = new Point(69, 18);
-                comboBoxSelectOn.Name = "comboBoxSelectOn"+_currentTabIndex;
+                comboBoxSelectOn.Name = "comboBoxSelectOn" + _currentTabIndex;
                 comboBoxSelectOn.Size = new Size(581, 21);
                 comboBoxSelectOn.TabIndex = _currentTabIndex++;
                 comboBoxSelectOn.TextChanged += GroupBoxSelectorChanged;
@@ -1078,7 +1083,7 @@ namespace KeePassPasswordChanger.Templates
                     if (((Selector) selector).SelectorExecuteActionOn.ToString() == comboBoxSelectOn.Items[i].ToString())
                         comboBoxSelectOn.SelectedIndex = i;
                 }
-                
+
                 groupBox.Controls.Add(comboBoxSelectOn);
                 comboBoxSelectOn.Parent = groupBox;
 
@@ -1107,12 +1112,12 @@ namespace KeePassPasswordChanger.Templates
 
                 TextBox textBoxIdentifier = new TextBox();
                 textBoxIdentifier.Location = new Point(105, 45);
-                textBoxIdentifier.Name = "textBoxIdentifier"+_currentTabIndex;
+                textBoxIdentifier.Name = "textBoxIdentifier" + _currentTabIndex;
                 textBoxIdentifier.Size = new Size(545, 20);
                 textBoxIdentifier.TabIndex = _currentTabIndex++;
                 textBoxIdentifier.TextChanged += GroupBoxSelectorChanged;
 
-                textBoxIdentifier.Text = ((Selector)selector).SelectorString;
+                textBoxIdentifier.Text = ((Selector) selector).SelectorString;
                 groupBox.Controls.Add(textBoxIdentifier);
             }
 
@@ -1130,7 +1135,7 @@ namespace KeePassPasswordChanger.Templates
 
                 TextBox textBoxExpectedNumber = new TextBox();
                 textBoxExpectedNumber.Location = new Point(162, 71);
-                textBoxExpectedNumber.Name = "textBoxExpectedNumber"+_currentTabIndex;
+                textBoxExpectedNumber.Name = "textBoxExpectedNumber" + _currentTabIndex;
                 textBoxExpectedNumber.Size = new Size(488, 20);
                 textBoxExpectedNumber.TabIndex = _currentTabIndex++;
                 textBoxExpectedNumber.KeyPress += TextBoxOnKeyPress;
@@ -1143,14 +1148,14 @@ namespace KeePassPasswordChanger.Templates
 
         private void GroupBoxSelectorChanged(object sender, EventArgs eventArgs)
         {
-            GroupBox groupBox = (GroupBox)((Control)sender).Parent;
+            GroupBox groupBox = (GroupBox) ((Control) sender).Parent;
             foreach (var parameterToInputObject in _parameterToInputList)
             {
                 if (parameterToInputObject.Value is GroupBox)
                 {
-                    if (((GroupBox)parameterToInputObject.Value) == groupBox)
+                    if (((GroupBox) parameterToInputObject.Value) == groupBox)
                     {
-                        Selector selector = (Selector)parameterToInputObject.Key;
+                        Selector selector = (Selector) parameterToInputObject.Key;
                         foreach (Control control in groupBox.Controls)
                         {
                             if (control is TextBox && control.Name.Contains("textBoxExpectedNumber"))
@@ -1186,7 +1191,7 @@ namespace KeePassPasswordChanger.Templates
         {
             GroupBox groupBox = GroupboxCreate(name, "Schema Type", 47);
             _parameterToInputList.Add(new KeyValuePair<object, object>(
-                   schemaType, groupBox));
+                schemaType, groupBox));
 
             {
                 //Select ON
@@ -1204,10 +1209,10 @@ namespace KeePassPasswordChanger.Templates
                 }
                 for (var i = 0; i < comboBoxSchemaType.Items.Count; i++)
                 {
-                    if (((InsecureHttpAuthSchemaType)schemaType).Value.ToString() == comboBoxSchemaType.Items[i].ToString())
+                    if (((InsecureHttpAuthSchemaType) schemaType).Value.ToString() == comboBoxSchemaType.Items[i].ToString())
                         comboBoxSchemaType.SelectedIndex = i;
                 }
-               
+
                 groupBox.Controls.Add(comboBoxSchemaType);
 
                 Label labelSchemaType = new Label();
@@ -1224,26 +1229,26 @@ namespace KeePassPasswordChanger.Templates
 
         private void GroupBoxSchemaTypeChanged(object sender, EventArgs eventArgs)
         {
-            GroupBox groupBox = (GroupBox)((Control)sender).Parent;
+            GroupBox groupBox = (GroupBox) ((Control) sender).Parent;
             foreach (var parameterToInputObject in _parameterToInputList)
             {
                 if (parameterToInputObject.Value is GroupBox)
                 {
-                    if (((GroupBox)parameterToInputObject.Value) == groupBox)
+                    if (((GroupBox) parameterToInputObject.Value) == groupBox)
                     {
-                        InsecureHttpAuthSchemaType schema = (InsecureHttpAuthSchemaType)parameterToInputObject.Key;
+                        InsecureHttpAuthSchemaType schema = (InsecureHttpAuthSchemaType) parameterToInputObject.Key;
                         foreach (Control control in groupBox.Controls)
                         {
                             if (control is ComboBox)
                             {
-                                ComboBox comboBox = (ComboBox)control;
+                                ComboBox comboBox = (ComboBox) control;
                                 foreach (var value in Enum.GetValues(typeof(GetHttpAuth.SchemaTypes)))
                                 {
                                     if (value.ToString() == comboBox.Text)
                                     {
                                         schema.Value =
-                                           (GetHttpAuth.SchemaTypes)
-                                           Enum.Parse(typeof(GetHttpAuth.SchemaTypes), comboBox.Text);
+                                            (GetHttpAuth.SchemaTypes)
+                                            Enum.Parse(typeof(GetHttpAuth.SchemaTypes), comboBox.Text);
                                     }
                                 }
                             }
@@ -1258,7 +1263,7 @@ namespace KeePassPasswordChanger.Templates
         {
             GroupBox groupBox = GroupboxCreate(name, "Schema Type", 47);
             _parameterToInputList.Add(new KeyValuePair<object, object>(
-                    jsPromptType, groupBox));
+                jsPromptType, groupBox));
             {
                 //Select ON
                 ComboBox comboBoxDialogType = new ComboBox();
@@ -1275,10 +1280,10 @@ namespace KeePassPasswordChanger.Templates
                 }
                 for (var i = 0; i < comboBoxDialogType.Items.Count; i++)
                 {
-                    if (((InsecureDialogType)jsPromptType).Value.ToString() == comboBoxDialogType.Items[i].ToString())
+                    if (((InsecureDialogType) jsPromptType).Value.ToString() == comboBoxDialogType.Items[i].ToString())
                         comboBoxDialogType.SelectedIndex = i;
                 }
-                
+
                 groupBox.Controls.Add(comboBoxDialogType);
 
                 Label labelDialogType = new Label();
@@ -1295,26 +1300,26 @@ namespace KeePassPasswordChanger.Templates
 
         private void GroupBoxJsPromptTypechanged(object sender, EventArgs eventArgs)
         {
-            GroupBox groupBox = (GroupBox)((Control)sender).Parent;
+            GroupBox groupBox = (GroupBox) ((Control) sender).Parent;
             foreach (var parameterToInputObject in _parameterToInputList)
             {
                 if (parameterToInputObject.Value is GroupBox)
                 {
-                    if (((GroupBox)parameterToInputObject.Value) == groupBox)
+                    if (((GroupBox) parameterToInputObject.Value) == groupBox)
                     {
-                        InsecureDialogType dialogType = (InsecureDialogType)parameterToInputObject.Key;
+                        InsecureDialogType dialogType = (InsecureDialogType) parameterToInputObject.Key;
                         foreach (Control control in groupBox.Controls)
                         {
                             if (control is ComboBox)
                             {
-                                ComboBox comboBox = (ComboBox)control;
+                                ComboBox comboBox = (ComboBox) control;
                                 foreach (var value in Enum.GetValues(typeof(GetJsPrompt.DialogTypes)))
                                 {
                                     if (value.ToString() == comboBox.Text)
                                     {
                                         dialogType.Value =
-                                          (GetJsPrompt.DialogTypes)
-                                          Enum.Parse(typeof(GetJsPrompt.DialogTypes), comboBox.Text);
+                                            (GetJsPrompt.DialogTypes)
+                                            Enum.Parse(typeof(GetJsPrompt.DialogTypes), comboBox.Text);
                                     }
                                 }
                             }
@@ -1335,7 +1340,7 @@ namespace KeePassPasswordChanger.Templates
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(644, 138);
             tabControl.TabIndex = _currentTabIndex++;
-            
+
             groupBox.Controls.Add(tabControl);
             //_parameterToInputList.Add(new KeyValuePair<object, object>(InsecureDisplayObjectList, tabControl));
 
@@ -1367,7 +1372,7 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (identifierToObjectKeyValuePair.Value is List<object>)
                 {
-                    insecureObjectsList = (List<object>)identifierToObjectKeyValuePair.Value;
+                    insecureObjectsList = (List<object>) identifierToObjectKeyValuePair.Value;
                 }
             }
             if (insecureObjectsList == null)
@@ -1378,24 +1383,24 @@ namespace KeePassPasswordChanger.Templates
             Debug.Assert(insecureObjectsList != null, "insecureObjectsList != null");
             foreach (var insecureObject in insecureObjectsList)
             {
-                if(insecureObject is InsecureText)
-                    AddInsecureTextTabToTabControl(tabControl, (InsecureText)insecureObject);
+                if (insecureObject is InsecureText)
+                    AddInsecureTextTabToTabControl(tabControl, (InsecureText) insecureObject);
                 else if (insecureObject is InsecureImage)
-                    AddInsecureImageTabToTabControl(tabControl, (InsecureImage)insecureObject);
+                    AddInsecureImageTabToTabControl(tabControl, (InsecureImage) insecureObject);
             }
         }
 
         private void ButtonAddInsecureImageObjectOnClick(object sender, EventArgs eventArgs)
         {
-            Button button = (Button)sender;
-            GroupBox groupBox = (GroupBox)button.Parent;
+            Button button = (Button) sender;
+            GroupBox groupBox = (GroupBox) button.Parent;
             List<KeyValuePairEx<string, object>> parameters = GetParameters();
             List<object> insecureObjectsList = null;
             foreach (var identifierToObjectKeyValuePair in parameters)
             {
                 if (identifierToObjectKeyValuePair.Value is List<object>)
                 {
-                    insecureObjectsList = (List<object>)identifierToObjectKeyValuePair.Value;
+                    insecureObjectsList = (List<object>) identifierToObjectKeyValuePair.Value;
                 }
             }
             if (insecureObjectsList == null)
@@ -1412,7 +1417,7 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (control is TabControl)
                 {
-                    AddInsecureImageTabToTabControl((TabControl)control, insecureImage);
+                    AddInsecureImageTabToTabControl((TabControl) control, insecureImage);
                 }
             }
         }
@@ -1420,8 +1425,8 @@ namespace KeePassPasswordChanger.Templates
         private void ButtonAddInsecureTextObject_Click(object sender, EventArgs e)
         {
             Button button = (Button) sender;
-            GroupBox groupBox = (GroupBox)button.Parent;
-            List<KeyValuePairEx<string,object>> parameters = GetParameters();
+            GroupBox groupBox = (GroupBox) button.Parent;
+            List<KeyValuePairEx<string, object>> parameters = GetParameters();
             List<object> insecureObjectsList = null;
             foreach (var identifierToObjectKeyValuePair in parameters)
             {
@@ -1444,7 +1449,7 @@ namespace KeePassPasswordChanger.Templates
             {
                 if (control is TabControl)
                 {
-                    AddInsecureTextTabToTabControl((TabControl)control, insecureText);
+                    AddInsecureTextTabToTabControl((TabControl) control, insecureText);
                 }
             }
         }
@@ -1452,7 +1457,7 @@ namespace KeePassPasswordChanger.Templates
         //TODO: insert existing data....
         private void AddInsecureTextTabToTabControl(TabControl tabControl, InsecureText insecureText)
         {
-            TabPage tabPage = new TabPage("Text " + (tabControl.TabPages.Count +1));
+            TabPage tabPage = new TabPage("Text " + (tabControl.TabPages.Count + 1));
             tabPage.Padding = new Padding(3);
             tabPage.Size = new Size(636, 112);
             tabPage.Location = new Point(4, 22);
@@ -1475,7 +1480,7 @@ namespace KeePassPasswordChanger.Templates
             tabPage.Controls.Add(buttonRemove);
             buttonRemove.Click += ButtonRemove_Click;
 
-            Label labelText = new Label(); 
+            Label labelText = new Label();
             labelText.AutoSize = true;
             labelText.Location = new Point(73, 9);
             //labelText.Name = "labelInsecureObjectText";
@@ -1484,7 +1489,7 @@ namespace KeePassPasswordChanger.Templates
             labelText.Text = "Text:";
 
             tabPage.Controls.Add(labelText);
-            
+
             TextBox textBoxText = new TextBox();
             textBoxText.Location = new Point(107, 6);
             textBoxText.Multiline = true;
@@ -1564,7 +1569,7 @@ namespace KeePassPasswordChanger.Templates
                 }
                 catch (Exception ex)
                 {
-                    
+
                 }
             }
 
@@ -1588,7 +1593,7 @@ namespace KeePassPasswordChanger.Templates
             textBoxBase64Image.TabIndex = _currentTabIndex++;
             textBoxBase64Image.Text = insecureImage.Base64EncodedImage;
             textBoxBase64Image.TextChanged += TextBoxBase64ImageOnTextChanged;
-            textBoxBase64Image.TextChanged +=TabPanelInsecureObjectsImageChanged;
+            textBoxBase64Image.TextChanged += TabPanelInsecureObjectsImageChanged;
 
             tabPage.Controls.Add(textBoxBase64Image);
 
@@ -1620,13 +1625,13 @@ namespace KeePassPasswordChanger.Templates
 
         private void TabPanelInsecureObjectsImageChanged(object sender, EventArgs eventArgs)
         {
-            TabPage tabPage = (TabPage)((Control)sender).Parent;
-            TextBox textBox = (TextBox)sender;
+            TabPage tabPage = (TabPage) ((Control) sender).Parent;
+            TextBox textBox = (TextBox) sender;
             foreach (var parameterToInput in _parameterToInputList)
             {
                 if (parameterToInput.Value is TabPage && parameterToInput.Value == tabPage)
                 {
-                    InsecureImage insecureImage = (InsecureImage)parameterToInput.Key;
+                    InsecureImage insecureImage = (InsecureImage) parameterToInput.Key;
                     insecureImage.Base64EncodedImage = textBox.Text;
                     TemplateElement.ReadAvailableInputParameters();
                 }
@@ -1635,8 +1640,8 @@ namespace KeePassPasswordChanger.Templates
 
         private void TextBoxBase64ImageOnTextChanged(object sender, EventArgs eventArgs)
         {
-            TextBox textBox = (TextBox)sender;
-            TabPage tabPage = (TabPage)textBox.Parent;
+            TextBox textBox = (TextBox) sender;
+            TabPage tabPage = (TabPage) textBox.Parent;
             PictureBox pictureBox = null;
             TextBox base64TextBox = null;
             foreach (Control control in tabPage.Controls)
@@ -1674,12 +1679,12 @@ namespace KeePassPasswordChanger.Templates
         private void CopyBase64ButtonOnClick(object sender, EventArgs eventArgs)
         {
             Button button = (Button) sender;
-            TabPage tabPage = (TabPage)button.Parent;
+            TabPage tabPage = (TabPage) button.Parent;
             TextBox textBox = null;
             foreach (Control control in tabPage.Controls)
             {
                 if (control is TextBox && control.Name.Contains("textBoxSingleInsecureBase64Image"))
-                    textBox = (TextBox)control;
+                    textBox = (TextBox) control;
             }
             if (textBox == null)
             {
@@ -1699,7 +1704,7 @@ namespace KeePassPasswordChanger.Templates
             foreach (Control control in tabPage.Controls)
             {
                 if (control is PictureBox)
-                    pictureBox = (PictureBox)control;
+                    pictureBox = (PictureBox) control;
                 else if (control is TextBox && control.Name.Contains("textBoxSingleInsecureBase64Image"))
                     textBox = (TextBox) control;
             }
@@ -1803,29 +1808,25 @@ namespace KeePassPasswordChanger.Templates
         private void textBoxTimeOut_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox) sender;
-            BaseObject baseObject = (BaseObject) TemplateElement.BrowserActionOrCommand;
+            BaseObject baseObject = null;
+            if (TemplateElement.BrowserActionOrCommand is BrowserCommand)
+            {
+                baseObject = ((BaseObject) TemplateElement.BrowserActionOrCommand);
+            }
+            else if (TemplateElement.BrowserActionOrCommand is BrowserAction)
+            {
+                baseObject = ((BaseObject) ((BrowserAction) TemplateElement.BrowserActionOrCommand).ActionObject);
+            }
+
+
             if (textBox.Text == "")
             {
-                if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserCommand)
-                {
-                    ((BaseObject) TemplateElement.BrowserActionOrCommand).TimeoutInSec = null;
-                }
-                else if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserAction)
-                {
-                    ((BaseObject) ((BrowserAction) ((BaseObject) TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec = null;
-                }
+                baseObject.TimeoutInSec = null;
                 return;
             }
             try
             {
-                if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserCommand)
-                {
-                    ((BaseObject)TemplateElement.BrowserActionOrCommand).TimeoutInSec = Convert.ToInt32(textBox.Text);
-                }
-                else if (((BaseObject)TemplateElement.BrowserActionOrCommand) is BrowserAction)
-                {
-                    ((BaseObject)((BrowserAction)((BaseObject)TemplateElement.BrowserActionOrCommand)).ActionObject).TimeoutInSec = Convert.ToInt32(textBox.Text);
-                }
+                baseObject.TimeoutInSec = Convert.ToInt32(textBox.Text);
             }
             catch (Exception)
             {

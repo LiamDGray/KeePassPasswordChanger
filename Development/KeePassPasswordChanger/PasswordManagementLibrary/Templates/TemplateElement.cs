@@ -47,7 +47,7 @@ namespace KeePassPasswordChanger.Templates
     [XmlInclude(typeof(InvokeFullKeyboardEvent))]
 
 
-    public class TemplateElement : ICloneable, IInstanciateInputParameters
+    public class TemplateElement : ICloneable
     {
         //Always Run CheckRequiredParameters after adding elements to this list!
         public List<string> RequiredParameters = new List<string>();
@@ -66,6 +66,7 @@ namespace KeePassPasswordChanger.Templates
 
         public TemplateElement()
         {
+            SetAvailableInputParameters();
             CheckRequiredParameters();
         }
 
@@ -102,6 +103,9 @@ namespace KeePassPasswordChanger.Templates
             {
                 baseObject = (BaseObject)((BrowserAction)BrowserActionOrCommand).ActionObject;
             }
+
+            SetAvailableInputParameters();
+
             foreach (var identifierToObjectKeyValuePair in baseObject.InputParameterAvailable)
             {
                 if (identifierToObjectKeyValuePair.Value is InsecureText)
@@ -225,6 +229,100 @@ namespace KeePassPasswordChanger.Templates
 
 
             return newTemplateElement;
+        }
+
+        public void SetAvailableInputParameters()
+        {
+            if (BrowserActionOrCommand == null)
+                return;
+
+            if (BrowserActionOrCommand is BrowserCommand)
+            {
+                if (BrowserActionOrCommand is GetInputFromUser)
+                    ((GetInputFromUser)BrowserActionOrCommand).SetAvailableInputParameters();
+                else if (BrowserActionOrCommand is LoadUrl)
+                    ((LoadUrl)BrowserActionOrCommand).SetAvailableInputParameters();
+                else if (BrowserActionOrCommand is SwitchUserInputEnabling)
+                    ((SwitchUserInputEnabling)BrowserActionOrCommand).SetAvailableInputParameters();
+                else if (BrowserActionOrCommand is SwitchWindowVisibility)
+                    ((SwitchWindowVisibility)BrowserActionOrCommand).SetAvailableInputParameters();
+                else
+                    ExceptionHandling.Handling.GetException("Unexpected",
+                        new Exception("Browser Command should be found!"));
+            }
+            else
+            {
+                BrowserAction browserAction = (BrowserAction)BrowserActionOrCommand;
+                //TODO read browseraction specific inputs when later wanted
+                if (browserAction.ActionObject is InvokeMouseClick && browserAction.ActionObject.GetType().Name == typeof(InvokeMouseClick).Name)
+                    ((InvokeMouseClick)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is ElementToClickOn && browserAction.ActionObject.GetType().Name == typeof(ElementToClickOn).Name)
+                    ((ElementToClickOn)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is ElementToLoad && browserAction.ActionObject.GetType().Name == typeof(ElementToLoad).Name)
+                    ((ElementToLoad)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is EventToTrigger && browserAction.ActionObject.GetType().Name == typeof(EventToTrigger).Name)
+                    ((EventToTrigger)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is FrameLoaded && browserAction.ActionObject.GetType().Name == typeof(FrameLoaded).Name)
+                    ((FrameLoaded)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetAttribute && browserAction.ActionObject.GetType().Name == typeof(GetAttribute).Name)
+                    ((GetAttribute)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetFrameNames && browserAction.ActionObject.GetType().Name == typeof(GetFrameNames).Name)
+                    ((GetFrameNames)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetHttpAuth && browserAction.ActionObject.GetType().Name == typeof(GetHttpAuth).Name)
+                    ((GetHttpAuth)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetImage && browserAction.ActionObject.GetType().Name == typeof(GetImage).Name)
+                    ((GetImage)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetJsPrompt && browserAction.ActionObject.GetType().Name == typeof(GetJsPrompt).Name)
+                    ((GetJsPrompt)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetStyle && browserAction.ActionObject.GetType().Name == typeof(GetStyle).Name)
+                    ((GetStyle)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is HasAttributeSetTo && browserAction.ActionObject.GetType().Name == typeof(HasAttributeSetTo).Name)
+                    ((HasAttributeSetTo)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is HasStyleSetTo && browserAction.ActionObject.GetType().Name == typeof(HasStyleSetTo).Name)
+                    ((HasStyleSetTo)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is InvokeSubmit && browserAction.ActionObject.GetType().Name == typeof(InvokeSubmit).Name)
+                    ((InvokeSubmit)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is JavascriptToExecute && browserAction.ActionObject.GetType().Name == typeof(JavascriptToExecute).Name)
+                    ((JavascriptToExecute)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is ResourceToLoad && browserAction.ActionObject.GetType().Name == typeof(ResourceToLoad).Name)
+                    ((ResourceToLoad)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is ReturnNode && browserAction.ActionObject.GetType().Name == typeof(ReturnNode).Name)
+                    ((ReturnNode)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SecondsToWait && browserAction.ActionObject.GetType().Name == typeof(SecondsToWait).Name)
+                    ((SecondsToWait)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SetAttribute && browserAction.ActionObject.GetType().Name == typeof(SetAttribute).Name)
+                    ((SetAttribute)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SetHttpAuth && browserAction.ActionObject.GetType().Name == typeof(SetHttpAuth).Name)
+                    ((SetHttpAuth)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SetJsPrompt && browserAction.ActionObject.GetType().Name == typeof(SetJsPrompt).Name)
+                    ((SetJsPrompt)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SetStyle && browserAction.ActionObject.GetType().Name == typeof(SetStyle).Name)
+                    ((SetStyle)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SiteLoaded && browserAction.ActionObject.GetType().Name == typeof(SiteLoaded).Name)
+                    ((SiteLoaded)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is TextToTypeIn && browserAction.ActionObject.GetType().Name == typeof(TextToTypeIn).Name)
+                    ((TextToTypeIn)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetInnerText && browserAction.ActionObject.GetType().Name == typeof(GetInnerText).Name)
+                    ((GetInnerText)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is GetInnerHtml && browserAction.ActionObject.GetType().Name == typeof(GetInnerHtml).Name)
+                    ((GetInnerHtml)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SetValue && browserAction.ActionObject.GetType().Name == typeof(SetValue).Name)
+                    ((SetValue)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is SecondsToWait && browserAction.ActionObject.GetType().Name == typeof(SecondsToWait).Name)
+                    ((SecondsToWait)browserAction.ActionObject).SetAvailableInputParameters();
+                else if (browserAction.ActionObject is InvokeFullKeyboardEvent && browserAction.ActionObject.GetType().Name == typeof(InvokeFullKeyboardEvent).Name)
+                    ((InvokeFullKeyboardEvent)browserAction.ActionObject).SetAvailableInputParameters();
+                else
+                    ExceptionHandling.Handling.GetException("Unexpected",
+                        new Exception("Browser Action Object should be found!"));
+            }
+            //if (AppendedTemplateElement != null)
+            //    AppendedTemplateElement.SetAvailableInputParameters();
+            //foreach (var conditionsToTemplateElement in ConditionBasedAppendedTemplateElements)
+            //{
+            //    if (conditionsToTemplateElement.Value != null)
+            //        conditionsToTemplateElement.Value.SetAvailableInputParameters();
+            //}
         }
 
         public  void ReadAvailableInputParameters()

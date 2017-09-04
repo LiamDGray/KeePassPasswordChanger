@@ -171,7 +171,7 @@ namespace KeePassPasswordChanger
                             }
 
                             if (templatesReady.Count == 0 &&
-                                templatesInTransit.Count == 0)
+                                templatesInTransit.Count == 0 && ControlBox == false)
                             {
                                 KeePassPasswordChangerExt.SaveCurrentDb();
                                 _dottedTimer.Stop();
