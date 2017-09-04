@@ -371,7 +371,7 @@ namespace KeePassPasswordChanger
 
                 //Simple log entry for each pw db initialization
                 ExtentEntryNote(pwd.Name + " is opened", true);
-                SaveCurrentDb();
+                //SaveCurrentDb();
                 return true;
             }
             catch(ApplicationException ex)

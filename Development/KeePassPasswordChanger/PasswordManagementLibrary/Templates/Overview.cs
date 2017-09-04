@@ -592,7 +592,8 @@ namespace KeePassPasswordChanger.Templates
         private void CleanTemplateElement(TemplateElement templateElement)
         {
             BaseObject baseObject = ((BaseObject) templateElement.BrowserActionOrCommand);
-            baseObject.InputParameterAvailable = null;
+            if(templateElement.BrowserActionOrCommand is BrowserAction)
+                baseObject.InputParameterAvailable = null;
             if (templateElement.AppendedTemplateElement != null)
                 CleanTemplateElement(templateElement.AppendedTemplateElement);
             foreach (var conditionsToTemplateElement in templateElement.ConditionBasedAppendedTemplateElements)
@@ -605,10 +606,10 @@ namespace KeePassPasswordChanger.Templates
         private Template CleanTemplate(Template template)
         {
             template.AvailableResources = null;
-            template.InputParameterAvailable = null;
+            //template.InputParameterAvailable = null;
             foreach (var templateTemplateElement in template.TemplateElements)
             {
-                CleanTemplateElement(templateTemplateElement);
+                //CleanTemplateElement(templateTemplateElement);
             }
             return template;
         }
